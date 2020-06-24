@@ -1,0 +1,16 @@
+formatters:
+  simple:
+    format: '[%(asctime)s] {%(funcName)s} %(levelname)s - %(message)s'
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: simple
+    stream: ext://sys.stdout
+loggers:
+  default_logger: #do not change!
+    handlers:
+    - console
+    level: DEBUG
+    propagate: false
+
+version: 1

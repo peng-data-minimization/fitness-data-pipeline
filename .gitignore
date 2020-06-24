@@ -1,0 +1,5 @@
+data/
+strava-token.json
+.envrc
+__pycache__
+TODO.md
