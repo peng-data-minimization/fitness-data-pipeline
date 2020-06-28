@@ -1,0 +1,16 @@
+---
+# Elasticsearch cluster on Minikube
+
+# Shrink default JVM heap.
+cluster:
+  additionalJavaOpts: "-Xmx128m -Xms128m"
+
+# Old Elasticsearch version is required which is compatible with lensesio Kafka Elasticsearch connector
+image:
+  tag: 6.8.2
+
+# Request smaller persistent volumes.
+data:
+  persistence:
+    storageClass: "standard"
+    size: 5Gi

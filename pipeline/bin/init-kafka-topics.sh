@@ -13,7 +13,7 @@ export KAFKAS=${RELEASE_NAME}-cp-kafka-headless:9092
 
 # Create Topic
 kafka-topics --zookeeper $ZOOKEEPERS --create --topic ingestion --partitions 6 --replication-factor 1
-kafka-topics --zookeeper $ZOOKEEPERS --create --topic harmonized --partitions 6 --replication-factor 1
+kafka-topics --zookeeper $ZOOKEEPERS --create --topic anon --partitions 6 --replication-factor 1
 kafka-topics --zookeeper $ZOOKEEPERS --create --topic processed --partitions 6 --replication-factor 1
 
 # Producer

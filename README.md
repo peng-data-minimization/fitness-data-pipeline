@@ -29,8 +29,7 @@ A Kubernetes based fitness data streaming pipeline with the following components
 1. Deploy the Confluent Platform on k8s with helm:
 ```
 $ helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/
-$ helm repo update
-$ helm install fitness-data-pipeline confluentinc/cp-$ helm-charts --version 0.5.0
+$ helm install fitness-data-pipeline confluentinc/cp-helm-charts --version 0.5.0 -f pipeline/confluent-platform/values.yml
 ```
 
 2. Create a k8s deployment for the donation-platform and the kafka-producer and expose them via a NodePort:
@@ -102,7 +101,7 @@ $ ssh -fNT -L 7777:<NODE_IP>:<DONATION_PORT> root@<VM_IP>
 $ open http://localhost:7777
 ```
 
-**Kakfka / Zookeeoer Client Deployment**
+**Kafka / Zookeeper Client Deployment**
 
 Deploy Kafka or Zookeeper client pod to play around:
 ```
@@ -119,7 +118,7 @@ For more details see [cp-helm-charts#kafka](https://github.com/confluentinc/cp-h
 The pipeline is deployed on a MiniKube Kubernetes Cluster running Ubuntu 20.04 on GCP.
 
 
-1. Install MiniKube
+1. Install MiniKube & kubectl
 Follow tutorial [How To Install Minikube on Ubuntu](https://computingforgeeks.com/how-to-install-minikube-on-ubuntu-debian-linux/), but don't use additonal hypervisor and instead install MiniKube with `--driver=none`
 
 2. Install Helm

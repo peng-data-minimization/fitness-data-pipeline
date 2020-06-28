@@ -1,0 +1,20 @@
+PUT _template/test
+{
+  "index_patterns": ["index*"],
+  "mappings": {
+    "_doc": {
+      "properties": {
+        "start_latlng": {
+          "type": "geo_point"
+        },
+        "end_latlng": {
+          "type": "geo_point"
+        }
+      }
+    }
+  }
+}
+
+GET /index_1/_mapping/
+
+GET /_template/test
