@@ -2,21 +2,23 @@
 
 A simple python Kafka producer that collects donated fitness data and scrapes publicly available data.
 
-## How does work?
+Currently supported fitness apps & platforms:
+* Strava
+
+
+## Usage
 
 ### GET `/donate-activities?token=<access-token>`
 Donates all personal fitness activity data visible with given `access-token`. The endpoint is automically being called after authorizing the donation platform to access ones fitness data (e.g. `/authorize/strava`).
 
-
 ### GET `/generate-data/{start,stop}`
 Starts / stops continuously producing exemplary fitness data. Each second an activity is send to the ingestion Kafka topic.
 
-### Currently supported fitness apps & platforms:
-* Strava
 
 ## Deployment
 
 The producer is being deployed with Kubernetes as part of a Confluent Streaming Platform. For more details see the Fitness Data Pipeline [README](../README.md).
+
 
 ## Development
 

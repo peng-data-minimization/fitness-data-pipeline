@@ -2,7 +2,8 @@
 
 A Kubernetes based fitness data streaming pipeline with the following components:
 * Confluent Platform
-* ELK Stack
+* Elasticsearch & Kibana
+* Grafana & Prometheus
 * Fitness Data Donation Platform
 * Fitness Data Kafka Producer
 
@@ -24,6 +25,7 @@ A Kubernetes based fitness data streaming pipeline with the following components
 * kubectl
 * envsubst (gettext)
 
+
 ## Deployment
 
 1. Deploy the Confluent Platform on k8s with helm:
@@ -38,13 +40,10 @@ $ export STRAVA_CLIENT_ID=<client-id>
 $ export STRAVA_CLIENT_SECRET=<client-secret>
 $ cat deployment.yml | envsubst | kubectl apply -f -
 ```
-3. Setup ELK stack (refer to [pipeline/README.md](pipeline/README.md))
+3. Setup remaining pipeline components (Elasticsearch, Kibana, Grafana & Prometheus) (refer to [pipeline/README.md](pipeline/README.md))
 
-4. Test setup (optional)
-```
-$ kubectl exec -c cp-kafka-broker -it fitness-data-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-producer --broker-list localhost:9092 --topic anon
-$ kubectl exec -c cp-kafka-broker -it fitness-data-pipeline-cp-kafka-0 -- /bin/bash  /usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic anon --from-beginning
-```
+4. Testing setup see [Manual Testing](#manual-testing)
+
 
 ## Development
 
@@ -64,19 +63,6 @@ $ rsync -a ~workspace/fitness-data-pipeline/ root@<VM_IP>:/data/workspace/fitnes
 $ cat deployment.yml | envsubst | kubectl apply -f -
 ```
 
-### Local Setup
-
-To build and test the application locally, use docker-compose:
-```
-$ docker-compose up --build
-$ open http://localhost:7777 # testing fitness-data-donation-platform
-$ curl -X GET http://localhost:7778/generate-data/start # testing kafka-producer
-$ docker exec $(docker ps -aqf "name=fitness-data_kafka-server_1") /bin/bash -c "/opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic anon --from-beginning" # verify that messages have arrived
-```
-
-See [kafka-producer/README.md](kafka-producer/README.md) and [donation-platform/README.md](donation-platform/README.md) for more details.
-
-
 ### Manual Testing
 
 **Kafka Producer**
@@ -95,10 +81,25 @@ $ curl -X GET http://${NODE_IP}:${PRODUCER_PORT}/generate-data/start
 
 **Fitness Data Donation Platform**
 
-Enable local port forwarding to play around with the donation platform in the local browser:
+Enable local port forwarding to access donation platform in the local browser and donate e.g. Strava activity data:
 ```
 $ ssh -fNT -L 7777:<NODE_IP>:<DONATION_PORT> root@<VM_IP>
-$ open http://localhost:7777
+$ open http://localhost:7777/authorize/strava
+```
+
+**Kafka Broker**
+
+Send data via:
+* donation platform `/authorize/strava`
+* fitness data kafka-producer `/generate-data/start`
+* manually
+ ```
+ kubectl exec -c cp-kafka-broker -it fitness-data-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-producer --broker-list localhost:9092 --topic anon
+ ```
+
+Verify that data can be consumed:
+```
+$ kubectl exec -c cp-kafka-broker -it fitness-data-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic anon --from-beginning"
 ```
 
 **Kafka / Zookeeper Client Deployment**
@@ -111,6 +112,18 @@ $ kubectl apply -f cp-helm-charts/examples/kafka-client.yaml
 $ kubectl exec -it kafka-client -- /bin/bash <kafka-binary>
 ```
 For more details see [cp-helm-charts#kafka](https://github.com/confluentinc/cp-helm-charts#kafka) and [cp-helm-charts#zookeepers](https://github.com/confluentinc/cp-helm-charts#zookeepers).
+
+### Local Setup
+
+To build and test the application locally, use docker-compose:
+```
+$ docker-compose up --build
+$ open http://localhost:7777 # testing fitness-data-donation-platform
+$ curl -X GET http://localhost:7778/generate-data/start # testing kafka-producer
+$ docker exec $(docker ps -aqf "name=fitness-data_kafka-server_1") /bin/bash -c "/opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic anon --from-beginning" # verify that messages have arrived
+```
+
+See [kafka-producer/README.md](kafka-producer/README.md) and [donation-platform/README.md](donation-platform/README.md) for more details.
 
 
 ## Environment Setup

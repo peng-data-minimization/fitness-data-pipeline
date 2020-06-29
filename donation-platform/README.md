@@ -11,11 +11,17 @@ Currently supported fitness apps & platforms:
 
 ## Usage
 
-Authorize the app to access your Strava activities:
+### GET `/authorize/<platform>`
+
+Authorize the app to access and donate your fitness platform activities (e.g. Strava). Open in local browser:
 ```
 open http://localhost:7777/authorize/strava
 ```
 <img src="static/authorize-strava-example.png" alt="Strava Authorization" height="500" />
+
+### GET `/donate-again`
+Donate fitness data of previously authorized platform again.
+
 
 ## Deployment
 
