@@ -1,0 +1,102 @@
+[
+    {
+      "_id": "d8a3f7d0-ba3c-11ea-bf74-7faa6b8c47fc",
+      "_type": "dashboard",
+      "_source": {
+        "title": "Donated Strava Activities",
+        "hits": 0,
+        "description": "",
+        "panelsJSON": "[{\"embeddableConfig\":{},\"gridData\":{\"x\":0,\"y\":31,\"w\":24,\"h\":15,\"i\":\"1\"},\"id\":\"2cc06550-ba39-11ea-bf74-7faa6b8c47fc\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"version\":\"6.7.0\"},{\"embeddableConfig\":{},\"gridData\":{\"x\":0,\"y\":15,\"w\":16,\"h\":16,\"i\":\"2\"},\"id\":\"c5f7c3c0-ba3a-11ea-bf74-7faa6b8c47fc\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"version\":\"6.7.0\"},{\"embeddableConfig\":{},\"gridData\":{\"x\":16,\"y\":15,\"w\":16,\"h\":16,\"i\":\"3\"},\"id\":\"f5521c10-ba3a-11ea-bf74-7faa6b8c47fc\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"version\":\"6.7.0\"},{\"embeddableConfig\":{},\"gridData\":{\"x\":24,\"y\":31,\"w\":24,\"h\":15,\"i\":\"4\"},\"id\":\"a36f2b30-ba3b-11ea-bf74-7faa6b8c47fc\",\"panelIndex\":\"4\",\"type\":\"visualization\",\"version\":\"6.7.0\"},{\"embeddableConfig\":{},\"gridData\":{\"x\":0,\"y\":0,\"w\":48,\"h\":15,\"i\":\"5\"},\"id\":\"44e601f0-ba3c-11ea-bf74-7faa6b8c47fc\",\"panelIndex\":\"5\",\"type\":\"visualization\",\"version\":\"6.7.0\"},{\"gridData\":{\"x\":32,\"y\":15,\"w\":16,\"h\":16,\"i\":\"6\"},\"version\":\"6.7.0\",\"panelIndex\":\"6\",\"type\":\"visualization\",\"id\":\"6a8df100-ba3d-11ea-bf74-7faa6b8c47fc\",\"embeddableConfig\":{}}]",
+        "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
+        "version": 1,
+        "timeRestore": false,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
+        }
+      }
+    },
+    {
+      "_id": "44e601f0-ba3c-11ea-bf74-7faa6b8c47fc",
+      "_type": "visualization",
+      "_source": {
+        "title": "Donations",
+        "visState": "{\"title\":\"Donations\",\"type\":\"line\",\"params\":{\"type\":\"line\",\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Activity Donations\"}},{\"id\":\"ValueAxis-2\",\"name\":\"RightAxis-1\",\"type\":\"value\",\"position\":\"right\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Donating Athletes\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Activity Donations\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"interpolate\":\"cardinal\"},{\"show\":true,\"mode\":\"normal\",\"type\":\"line\",\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"data\":{\"id\":\"3\",\"label\":\"Donating Athletes\"},\"valueAxis\":\"ValueAxis-2\",\"interpolate\":\"cardinal\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{\"customLabel\":\"Activity Donations\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"start_date\",\"timeRange\":{\"from\":\"now-6M\",\"to\":\"now\",\"mode\":\"quick\"},\"useNormalizedEsInterval\":true,\"interval\":\"w\",\"time_zone\":\"Europe/Berlin\",\"drop_partials\":false,\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"athlete.id\",\"customLabel\":\"Donating Athletes\"}}]}",
+        "uiStateJSON": "{\"vis\":{\"legendOpen\":true,\"colors\":{\"Donating Athletes\":\"#0A50A1\"}}}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"8e44d430-b9eb-11ea-bf74-7faa6b8c47fc\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+        }
+      }
+    },
+    {
+      "_id": "2cc06550-ba39-11ea-bf74-7faa6b8c47fc",
+      "_type": "visualization",
+      "_source": {
+        "title": "Heart Rate & Speed",
+        "visState": "{\"title\":\"Heart Rate & Speed\",\"type\":\"line\",\"params\":{\"type\":\"line\",\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-2\",\"name\":\"LeftAxis-2\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Heartrate\"}},{\"id\":\"ValueAxis-3\",\"name\":\"RightAxis-2\",\"type\":\"value\",\"position\":\"right\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Speed\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average max_heartrate\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-2\",\"drawLinesBetweenPoints\":true,\"showCircles\":true},{\"show\":true,\"mode\":\"normal\",\"type\":\"line\",\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"data\":{\"id\":\"3\",\"label\":\"Average average_heartrate\"},\"valueAxis\":\"ValueAxis-2\"},{\"show\":true,\"mode\":\"normal\",\"type\":\"area\",\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"data\":{\"id\":\"4\",\"label\":\"Average average_speed\"},\"valueAxis\":\"ValueAxis-3\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"max_heartrate\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"start_date\",\"timeRange\":{\"from\":\"now-1y\",\"to\":\"now\",\"mode\":\"quick\"},\"useNormalizedEsInterval\":true,\"interval\":\"w\",\"time_zone\":\"Europe/Berlin\",\"drop_partials\":false,\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"average_heartrate\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"average_speed\"}}]}",
+        "uiStateJSON": "{}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"8e44d430-b9eb-11ea-bf74-7faa6b8c47fc\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+        }
+      }
+    },
+    {
+      "_id": "a36f2b30-ba3b-11ea-bf74-7faa6b8c47fc",
+      "_type": "visualization",
+      "_source": {
+        "title": "Distance",
+        "visState": "{\"title\":\"Distance\",\"type\":\"histogram\",\"params\":{\"type\":\"histogram\",\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Sum of distance\"}},{\"id\":\"ValueAxis-2\",\"name\":\"RightAxis-1\",\"type\":\"value\",\"position\":\"right\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Max distance\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"histogram\",\"mode\":\"stacked\",\"data\":{\"label\":\"Sum of distance\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true},{\"show\":true,\"mode\":\"normal\",\"type\":\"line\",\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"data\":{\"id\":\"3\",\"label\":\"Max distance\"},\"valueAxis\":\"ValueAxis-2\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"sum\",\"schema\":\"metric\",\"params\":{\"field\":\"distance\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"start_date\",\"timeRange\":{\"from\":\"now-1y\",\"to\":\"now\",\"mode\":\"quick\"},\"useNormalizedEsInterval\":true,\"interval\":\"w\",\"time_zone\":\"Europe/Berlin\",\"drop_partials\":false,\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"distance\"}}]}",
+        "uiStateJSON": "{}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"8e44d430-b9eb-11ea-bf74-7faa6b8c47fc\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+        }
+      }
+    },
+    {
+      "_id": "f5521c10-ba3a-11ea-bf74-7faa6b8c47fc",
+      "_type": "visualization",
+      "_source": {
+        "title": "Max Distance",
+        "visState": "{\"title\":\"Max Distance\",\"type\":\"gauge\",\"params\":{\"type\":\"gauge\",\"addTooltip\":true,\"addLegend\":true,\"isDisplayWarning\":false,\"gauge\":{\"verticalSplit\":false,\"extendRange\":true,\"percentageMode\":false,\"gaugeType\":\"Arc\",\"gaugeStyle\":\"Full\",\"backStyle\":\"Full\",\"orientation\":\"vertical\",\"colorSchema\":\"Green to Red\",\"gaugeColorMode\":\"Labels\",\"colorsRange\":[{\"from\":0,\"to\":100000},{\"from\":100000,\"to\":200000},{\"from\":200000,\"to\":300000},{\"from\":300000,\"to\":400000}],\"invertColors\":false,\"labels\":{\"show\":true,\"color\":\"black\"},\"scale\":{\"show\":true,\"labels\":false,\"color\":\"#333\"},\"type\":\"meter\",\"style\":{\"bgWidth\":0.9,\"width\":0.9,\"mask\":false,\"bgMask\":false,\"maskBars\":50,\"bgFill\":\"#eee\",\"bgColor\":false,\"subText\":\"\",\"fontSize\":60,\"labelColor\":true}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"distance\",\"customLabel\":\"Max Distance [m]\"}}]}",
+        "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 100000\":\"rgb(0,104,55)\",\"100000 - 200000\":\"rgb(183,224,117)\",\"200000 - 300000\":\"rgb(253,191,111)\",\"300000 - 400000\":\"rgb(165,0,38)\"}}}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"8e44d430-b9eb-11ea-bf74-7faa6b8c47fc\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+        }
+      }
+    },
+    {
+      "_id": "c5f7c3c0-ba3a-11ea-bf74-7faa6b8c47fc",
+      "_type": "visualization",
+      "_source": {
+        "title": "Max Speed",
+        "visState": "{\"title\":\"Max Speed\",\"type\":\"gauge\",\"params\":{\"type\":\"gauge\",\"addTooltip\":true,\"addLegend\":true,\"isDisplayWarning\":false,\"gauge\":{\"verticalSplit\":false,\"extendRange\":true,\"percentageMode\":false,\"gaugeType\":\"Arc\",\"gaugeStyle\":\"Full\",\"backStyle\":\"Full\",\"orientation\":\"vertical\",\"colorSchema\":\"Green to Red\",\"gaugeColorMode\":\"Labels\",\"colorsRange\":[{\"from\":0,\"to\":10},{\"from\":10,\"to\":20},{\"from\":20,\"to\":30},{\"from\":30,\"to\":40}],\"invertColors\":false,\"labels\":{\"show\":true,\"color\":\"black\"},\"scale\":{\"show\":true,\"labels\":false,\"color\":\"#333\"},\"type\":\"meter\",\"style\":{\"bgWidth\":0.9,\"width\":0.9,\"mask\":false,\"bgMask\":false,\"maskBars\":50,\"bgFill\":\"#eee\",\"bgColor\":false,\"subText\":\"\",\"fontSize\":60,\"labelColor\":true}}},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"max_speed\",\"customLabel\":\"Max Speed [m/s]\"}}]}",
+        "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 10\":\"rgb(0,104,55)\",\"10 - 20\":\"rgb(183,224,117)\",\"20 - 30\":\"rgb(253,191,111)\",\"30 - 40\":\"rgb(165,0,38)\"}}}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"8e44d430-b9eb-11ea-bf74-7faa6b8c47fc\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+        }
+      }
+    },
+    {
+      "_id": "6a8df100-ba3d-11ea-bf74-7faa6b8c47fc",
+      "_type": "visualization",
+      "_source": {
+        "title": "Max Elevation",
+        "visState": "{\"title\":\"Max Elevation\",\"type\":\"gauge\",\"params\":{\"type\":\"gauge\",\"addTooltip\":true,\"addLegend\":true,\"isDisplayWarning\":false,\"gauge\":{\"verticalSplit\":false,\"extendRange\":true,\"percentageMode\":false,\"gaugeType\":\"Arc\",\"gaugeStyle\":\"Full\",\"backStyle\":\"Full\",\"orientation\":\"vertical\",\"colorSchema\":\"Green to Red\",\"gaugeColorMode\":\"Labels\",\"colorsRange\":[{\"from\":0,\"to\":2000},{\"from\":2000,\"to\":4000},{\"from\":4000,\"to\":6000},{\"from\":6000,\"to\":8000},{\"from\":8000,\"to\":10000}],\"invertColors\":false,\"labels\":{\"show\":true,\"color\":\"black\"},\"scale\":{\"show\":true,\"labels\":false,\"color\":\"#333\"},\"type\":\"meter\",\"style\":{\"bgWidth\":0.9,\"width\":0.9,\"mask\":false,\"bgMask\":false,\"maskBars\":50,\"bgFill\":\"#eee\",\"bgColor\":false,\"subText\":\"\",\"fontSize\":60,\"labelColor\":true}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"total_elevation_gain\",\"customLabel\":\"Max Elevation Gain [m]\"}}]}",
+        "uiStateJSON": "{\"vis\":{\"defaultColors\":{\"0 - 2000\":\"rgb(0,104,55)\",\"2000 - 4000\":\"rgb(135,203,103)\",\"4000 - 6000\":\"rgb(255,255,190)\",\"6000 - 8000\":\"rgb(249,142,82)\",\"8000 - 10000\":\"rgb(165,0,38)\"}}}",
+        "description": "",
+        "version": 1,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"8e44d430-b9eb-11ea-bf74-7faa6b8c47fc\",\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[]}"
+        }
+      }
+    }
+  ]

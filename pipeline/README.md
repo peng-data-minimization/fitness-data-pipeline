@@ -40,10 +40,13 @@ Warning: Unfortunately, the lensesio Kafka Elasticsearch connector does not yet 
     ```
 
 4. Configure Kibana
-    Enable port forwarding for Kibana and create index pattern for index `activities`.
-    ```
-    $ kubectl port-forward deployment/kibana 5601
-    ```
+    * Enable port forwarding to access the web app
+        ```
+        $ kubectl port-forward deployment/kibana 5601
+        ```
+    * Create index pattern for index `activities`
+    * Import dashboard and visualizations (see [dashboard.json](pipeline/kibana/config/dashboard.json))
+        <img src="kibana/img/kibana-dashboard.png" alt="Kibana Visualization" height="300" />
 
 5. Test Stack (see [Manual Testing](#test-pipeline-))
 

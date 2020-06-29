@@ -1,0 +1,149 @@
+{
+    "title": "Donations",
+    "type": "line",
+    "params": {
+      "type": "line",
+      "grid": {
+        "categoryLines": false,
+        "style": {
+          "color": "#eee"
+        }
+      },
+      "categoryAxes": [
+        {
+          "id": "CategoryAxis-1",
+          "type": "category",
+          "position": "bottom",
+          "show": true,
+          "style": {},
+          "scale": {
+            "type": "linear"
+          },
+          "labels": {
+            "show": true,
+            "truncate": 100
+          },
+          "title": {}
+        }
+      ],
+      "valueAxes": [
+        {
+          "id": "ValueAxis-1",
+          "name": "LeftAxis-1",
+          "type": "value",
+          "position": "left",
+          "show": true,
+          "style": {},
+          "scale": {
+            "type": "linear",
+            "mode": "normal"
+          },
+          "labels": {
+            "show": true,
+            "rotate": 0,
+            "filter": false,
+            "truncate": 100
+          },
+          "title": {
+            "text": "Activity Donations"
+          }
+        },
+        {
+          "id": "ValueAxis-2",
+          "name": "RightAxis-1",
+          "type": "value",
+          "position": "right",
+          "show": true,
+          "style": {},
+          "scale": {
+            "type": "linear",
+            "mode": "normal"
+          },
+          "labels": {
+            "show": true,
+            "rotate": 0,
+            "filter": false,
+            "truncate": 100
+          },
+          "title": {
+            "text": "Donating Athletes"
+          }
+        }
+      ],
+      "seriesParams": [
+        {
+          "show": "true",
+          "type": "line",
+          "mode": "normal",
+          "data": {
+            "label": "Activity Donations",
+            "id": "1"
+          },
+          "valueAxis": "ValueAxis-1",
+          "drawLinesBetweenPoints": true,
+          "showCircles": true,
+          "interpolate": "cardinal"
+        },
+        {
+          "show": true,
+          "mode": "normal",
+          "type": "line",
+          "drawLinesBetweenPoints": true,
+          "showCircles": true,
+          "data": {
+            "id": "3",
+            "label": "Donating Athletes"
+          },
+          "valueAxis": "ValueAxis-2",
+          "interpolate": "cardinal"
+        }
+      ],
+      "addTooltip": true,
+      "addLegend": true,
+      "legendPosition": "right",
+      "times": [],
+      "addTimeMarker": false
+    },
+    "aggs": [
+      {
+        "id": "1",
+        "enabled": true,
+        "type": "count",
+        "schema": "metric",
+        "params": {
+          "customLabel": "Activity Donations"
+        }
+      },
+      {
+        "id": "2",
+        "enabled": true,
+        "type": "date_histogram",
+        "schema": "segment",
+        "params": {
+          "field": "start_date",
+          "timeRange": {
+            "from": "now-6M",
+            "to": "now",
+            "mode": "quick"
+          },
+          "useNormalizedEsInterval": true,
+          "interval": "w",
+          "time_zone": "Europe/Berlin",
+          "drop_partials": false,
+          "customInterval": "2h",
+          "min_doc_count": 1,
+          "extended_bounds": {}
+        }
+      },
+      {
+        "id": "3",
+        "enabled": true,
+        "type": "cardinality",
+        "schema": "metric",
+        "params": {
+          "field": "athlete.id",
+          "customLabel": "Donating Athletes"
+        }
+      }
+    ]
+  }

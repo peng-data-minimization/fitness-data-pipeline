@@ -1,0 +1,167 @@
+{
+    "title": "Heart Rate & Speed",
+    "type": "line",
+    "params": {
+      "type": "line",
+      "grid": {
+        "categoryLines": false,
+        "style": {
+          "color": "#eee"
+        }
+      },
+      "categoryAxes": [
+        {
+          "id": "CategoryAxis-1",
+          "type": "category",
+          "position": "bottom",
+          "show": true,
+          "style": {},
+          "scale": {
+            "type": "linear"
+          },
+          "labels": {
+            "show": true,
+            "truncate": 100
+          },
+          "title": {}
+        }
+      ],
+      "valueAxes": [
+        {
+          "id": "ValueAxis-2",
+          "name": "LeftAxis-2",
+          "type": "value",
+          "position": "left",
+          "show": true,
+          "style": {},
+          "scale": {
+            "type": "linear",
+            "mode": "normal"
+          },
+          "labels": {
+            "show": true,
+            "rotate": 0,
+            "filter": false,
+            "truncate": 100
+          },
+          "title": {
+            "text": "Heartrate"
+          }
+        },
+        {
+          "id": "ValueAxis-3",
+          "name": "RightAxis-2",
+          "type": "value",
+          "position": "right",
+          "show": true,
+          "style": {},
+          "scale": {
+            "type": "linear",
+            "mode": "normal"
+          },
+          "labels": {
+            "show": true,
+            "rotate": 0,
+            "filter": false,
+            "truncate": 100
+          },
+          "title": {
+            "text": "Speed"
+          }
+        }
+      ],
+      "seriesParams": [
+        {
+          "show": "true",
+          "type": "line",
+          "mode": "normal",
+          "data": {
+            "label": "Average max_heartrate",
+            "id": "1"
+          },
+          "valueAxis": "ValueAxis-2",
+          "drawLinesBetweenPoints": true,
+          "showCircles": true
+        },
+        {
+          "show": true,
+          "mode": "normal",
+          "type": "line",
+          "drawLinesBetweenPoints": true,
+          "showCircles": true,
+          "data": {
+            "id": "3",
+            "label": "Average average_heartrate"
+          },
+          "valueAxis": "ValueAxis-2"
+        },
+        {
+          "show": true,
+          "mode": "normal",
+          "type": "area",
+          "drawLinesBetweenPoints": true,
+          "showCircles": true,
+          "data": {
+            "id": "4",
+            "label": "Average average_speed"
+          },
+          "valueAxis": "ValueAxis-3"
+        }
+      ],
+      "addTooltip": true,
+      "addLegend": true,
+      "legendPosition": "right",
+      "times": [],
+      "addTimeMarker": false
+    },
+    "aggs": [
+      {
+        "id": "1",
+        "enabled": true,
+        "type": "avg",
+        "schema": "metric",
+        "params": {
+          "field": "max_heartrate"
+        }
+      },
+      {
+        "id": "2",
+        "enabled": true,
+        "type": "date_histogram",
+        "schema": "segment",
+        "params": {
+          "field": "start_date",
+          "timeRange": {
+            "from": "now-1y",
+            "to": "now",
+            "mode": "quick"
+          },
+          "useNormalizedEsInterval": true,
+          "interval": "w",
+          "time_zone": "Europe/Berlin",
+          "drop_partials": false,
+          "customInterval": "2h",
+          "min_doc_count": 1,
+          "extended_bounds": {}
+        }
+      },
+      {
+        "id": "3",
+        "enabled": true,
+        "type": "avg",
+        "schema": "metric",
+        "params": {
+          "field": "average_heartrate"
+        }
+      },
+      {
+        "id": "4",
+        "enabled": true,
+        "type": "avg",
+        "schema": "metric",
+        "params": {
+          "field": "average_speed"
+        }
+      }
+    ]
+  }
