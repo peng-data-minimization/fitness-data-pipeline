@@ -3,6 +3,7 @@ import requests
 import os
 import json
 from flask import redirect
+from utils import get_base_path
 import urllib
 
 STRAVA_SCOPES = 'activity:read,activity:read_all'
@@ -44,7 +45,8 @@ def get_token(code):
         return
 
     token_data = response.json()
-    with open('strava-token.json', 'w') as f:
+    token_path = os.path.join(get_base_path(), 'strava-token.json')
+    with open(token_path, 'w') as f:
        json.dump(token_data, f, indent=4, sort_keys=True)
 
     return token_data.get('access_token')

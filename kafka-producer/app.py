@@ -34,12 +34,9 @@ def start_generation():
 
 def generate_and_produce():
     while os.getenv('running_flag') == 'running':
-        logger.info('ROUND GETTING ENV')
         activities = [generator.generate_strava_dummy_activity()]
         producer.produce(activities)
         time.sleep(1)
 
 if __name__ == '__main__':
     app.run(port=7778, host='0.0.0.0')
-
-

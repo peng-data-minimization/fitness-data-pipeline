@@ -12,6 +12,7 @@ requests = "*"
 kafka-python = "*"
 gunicorn = "==19.9.0" # workaround for https://github.com/eventlet/eventlet/issues/526
 eventlet = "*"
+faker = "*"
 
 [requires]
 python_version = "3.8"
