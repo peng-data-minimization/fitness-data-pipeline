@@ -120,7 +120,7 @@ To build and test the application locally, use docker-compose:
 $ docker-compose up --build
 $ open http://localhost:7777 # testing fitness-data-donation-platform
 $ curl -X GET http://localhost:7778/generate-data/start # testing kafka-producer
-$ docker exec $(docker ps -aqf "name=fitness-data_kafka-server_1") /bin/bash -c "/opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic anon --from-beginning" # verify that messages have arrived
+$ docker exec $(docker ps -aqf "name=fitness-data-pipeline_kafka_1") /bin/bash -c "/opt/kafka_*/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic anon --from-beginning" # verify that messages have arrived
 ```
 
 See [kafka-producer/README.md](kafka-producer/README.md) and [donation-platform/README.md](donation-platform/README.md) for more details.

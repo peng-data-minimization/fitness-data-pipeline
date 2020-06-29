@@ -34,5 +34,5 @@ $ curl -X GET http://localhost:7778/generate-data/start # testing kafka-producer
 
 Verify that data was send and processed successfully:
 ```
-$ docker exec $(docker ps -aqf "name=fitness-data_kafka-server_1") /bin/bash -c "/opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic anon --from-beginning"
+$ docker exec $(docker ps -aqf "name=fitness-data-pipeline_kafka_1") /bin/bash -c "/opt/kafka_*/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic anon --from-beginning"
 ```

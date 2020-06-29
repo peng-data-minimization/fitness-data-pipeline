@@ -43,5 +43,5 @@ $ docker-compose up --build # Option 2
 For Option 2, it can further be checked if the messages were send and processed successfully.
 ```
 $ curl -X GET http://localhost:7778/generate-data/start # testing kafka-producer
-$ docker exec $(docker ps -aqf "name=fitness-data_kafka-server_1") /bin/bash -c "/opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic anon --from-beginning" # verify that messages have arrived
+$ docker exec $(docker ps -aqf "name=fitness-data-pipeline_kafka_1") /bin/bash -c "/opt/kafka_*/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic anon --from-beginning" # verify that messages have arrived
 ```
