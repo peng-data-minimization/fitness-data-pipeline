@@ -53,7 +53,29 @@ JMX Metrics are enabled by default for all Confluent Platform components, Promet
  4. Import Confluent dashboard into Grafana ([confluent-grafana-dashboard.json](monitoring/confluent-grafana-dashboard.json))
 
 5. Configure Kibana
+ * Create index pattern for index `activities`
 
+6. Test Stack
+ * Generate test activity data
+ ```
+ $ export NODE_IP=$(kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}')
+ $ export PRODUCER_PORT=$(kubectl get service fitness-data-donation-service -o jsonpath='{.spec.ports[?(@.name=="producer")].nodePort}')
+ $ curl -X GET http://${NODE_IP}:${PRODUCER_PORT}/generate-data/start
+ ```
+ * Check that data can be consumed
+ ```
+$ kubecexec -c cp-kafka-broker -it fitness-data-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic anon
+ ```
+ * Check that Elasticsearch connector sink works
+ ```
+$ kubectl logs elasticsink-0 -f | grep "Delivered"
+[2020-06-29 09:37:03,969] INFO Delivered 90 records for anon since 2020-06-29 09:32:27 (com.datamountaineer.streamreactor.connect.utils.ProgressCounter)
+ ```
+ * Query Elasticsearch or look in Kibana
+ ```
+$ kubectl port-forward service/elasticsearch-client 9200
+$ curl -X GET http://localhost:9200/activities/_search?size=1000\&q=id:12345678987654321 | jq .[] # 12345678987654321 is the example activity data id
+ ```
 ## Setup Confluent Platform, Donation Platform & Kafka Producer
 
 Please refer to the Fitness Data Pipeline [README](../README.md) for more information about those components.

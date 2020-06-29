@@ -128,9 +128,10 @@ $ chmod 700 get_helm.sh
 $ ./get_helm.sh
 ```
 
-3. Install further tooling
+3. Install further tooling (recommended)
 ```
 $ apt-get update -y && apt-get install gettext-base
+$ helm plugin install https://github.com/databus23/helm-diff --version master
 ```
 
 4. Configure new storage location for docker

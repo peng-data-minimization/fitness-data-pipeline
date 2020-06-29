@@ -95,7 +95,7 @@ applicationId: com.datamountaineer.streamreactor.connect.elastic6.ElasticSinkCon
 topics: anon
 
 # kcqb KCQL expression describing field selection and routes. type: STRING importance: HIGH
-kcql: "INSERT INTO index_1 SELECT * FROM anon"
+kcql: "INSERT INTO activities SELECT * FROM anon"
 
 # A dictionary allowing to specify SMT's, e.g.
 # transforms:

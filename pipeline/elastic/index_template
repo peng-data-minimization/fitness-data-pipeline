@@ -15,6 +15,6 @@ PUT _template/test
   }
 }
 
-GET /index_1/_mapping/
+GET /activities/_mapping/
 
 GET /_template/test

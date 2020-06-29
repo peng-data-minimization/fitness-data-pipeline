@@ -82,6 +82,9 @@ cp-schema-registry:
   #  requests:
   #   cpu: 100m
   #   memory: 128Mi
+  configurationOverrides:
+    "cleanup.policy": "compact"
+
 
 ## ------------------------------------------------------
 ## REST Proxy
@@ -163,3 +166,10 @@ cp-control-center:
   #  requests:
   #   cpu: 100m
   #   memory: 128Mi
+  configurationOverrides:
+    "replication.factor": "3"
+    "monitoring.interceptor.topic.replication": "3"
+    "metrics.topic.replication": "3"
+    "command.topic.replication": "3"
+    "internal.topics.replication": "3"
+    "internal.topics.partitions": "4"

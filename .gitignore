@@ -3,3 +3,4 @@ strava-token.json
 .envrc
 __pycache__
 TODO.md
+kafka-client.yaml
