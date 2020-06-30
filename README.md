@@ -99,7 +99,7 @@ Send data via:
 
 Verify that data can be consumed:
 ```
-$ kubectl exec -c cp-kafka-broker -it fitness-data-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic anon --from-beginning"
+$ kubectl exec -c cp-kafka-broker -it fitness-data-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic anon --from-beginning
 ```
 
 **Kafka / Zookeeper Client Deployment**

@@ -15,6 +15,8 @@ $ helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/
 $ helm install fitness-data-pipeline confluentinc/cp-helm-charts --version 0.5.0 -f pipeline/confluent-platform/values.yml
 ```
 
+If you are having problems with access your kafka brokers from the outside, have a look [here](https://medium.com/@tsuyoshiushio/configuring-kafka-on-kubernetes-makes-available-from-an-external-client-with-helm-96e9308ee9f4) and [here](https://github.com/confluentinc/cp-helm-charts/issues/351).
+
 ## Setup Elasticsearch & Kibana
 
 For reference see the following tutorials [1](https://www.linode.com/docs/kubernetes/how-to-deploy-the-elastic-stack-on-kubernetes/
