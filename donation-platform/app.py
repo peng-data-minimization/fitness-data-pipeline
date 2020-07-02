@@ -1,14 +1,17 @@
+from gevent import monkey
+monkey.patch_all()
 import grequests
-from flask import Flask, render_template, request, make_response, jsonify
+from flask import Flask, render_template, request, make_response, jsonify, redirect, url_for, session
 from utils import strava_connector, kafkaproducer_connector, get_logger, get_access_token
 import json
 import uuid
 import os
 import re
 import requests
+import secrets
 
-
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
+app.secret_key = secrets.token_urlsafe(16)
 logger = get_logger()
 
 
@@ -43,26 +46,49 @@ def get_bot_response():
 
 @app.route('/authorize/strava')
 def authorize_strava():
+    session.clear()
     return strava_connector.authorize()
 
 
-@app.route('/strava', methods=['GET'])
-def strava():
-    return render_template('service.html', service_description='STRAVA')
+@app.route('/authorize/garmin')
+def login_garmin():
+    session.clear()
+    return make_response(render_template('login.html'))
+
+
+@app.route('/validate-login')
+def validate_login():
+    session['username'] = request.args.get('username', '')
+    session['password'] = request.args.get('password', '')
+    session.pop('token', None)
+    session['app'] = 'GARMIN'
+    return redirect(url_for('success'))
+
+
+@app.route('/success')
+def success():
+    if 'token' in session:
+        params = {'token': session['token']}
+    elif 'username' in session and 'password' in session:
+        params = {'username': session['username'], 'password': session['password']}
+
+    params['app'] = session['app'].lower()
+    kafkaproducer_connector.donate_activity_data(params)
+    return render_template('service.html', service_description=session['app'])
 
 
 @app.route("/exchange_token")
 def exchange_token():
     code = request.args.get('code')
-    token = strava_connector.get_token(code)
-    kafkaproducer_connector.donate_activity_data(token)
-    return render_template('service.html', service_description='STRAVA')
+    session['token'] = strava_connector.get_token(code)
+    session['app'] = 'STRAVA'
+    return redirect(url_for('success'))
 
 
 @app.route("/donate-again")
 def donate():
     token = get_access_token('strava')
-    kafkaproducer_connector.donate_activity_data(token)
+    kafkaproducer_connector.donate_activity_data({'token': token})
     return jsonify(success=True)
 
 

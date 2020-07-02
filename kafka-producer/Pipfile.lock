@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "24f4c19ba5185bad813b0e462c8052cc300598332388655e5ccc60d67e0b68ac"
+            "sha256": "290b7f31e2ea7eb8cddfd6257c2047678189b26e731bd7525eba40803cd98979"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -67,6 +67,13 @@
             ],
             "index": "pypi",
             "version": "==1.1.2"
+        },
+        "garminconnect": {
+            "hashes": [
+                "sha256:e62c87e9f72328b3e7e22a2db0aefb1a1c0577e9ef3a260f2f5faee0e3925929"
+            ],
+            "index": "pypi",
+            "version": "==0.1.14"
         },
         "greenlet": {
             "hashes": [

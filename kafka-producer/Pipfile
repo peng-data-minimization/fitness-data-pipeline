@@ -13,6 +13,7 @@ kafka-python = "*"
 gunicorn = "==19.9.0" # workaround for https://github.com/eventlet/eventlet/issues/526
 eventlet = "*"
 faker = "*"
+garminconnect = "*"
 
 [requires]
 python_version = "3.8"

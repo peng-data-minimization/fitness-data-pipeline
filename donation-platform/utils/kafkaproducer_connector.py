@@ -7,8 +7,7 @@ import urllib
 logger = get_logger()
 
 
-def donate_activity_data(access_token):
-    params = {'token': access_token}
+def donate_activity_data(params):
     encoded_params = urllib.parse.urlencode(params)
     producer_domain = os.getenv('PRODUCER_DOMAIN_NAME', 'localhost')
     url = 'http://' + producer_domain + ':7778/donate-activities?' + encoded_params

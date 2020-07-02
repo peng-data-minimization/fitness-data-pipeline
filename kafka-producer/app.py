@@ -3,6 +3,8 @@ from extractor import ActivityExtractor, ActivityExtractorException
 from generator import ActivityGenerator
 from utils import get_logger
 from threading import Thread
+from strava import extractor, generator
+from garmin import extractor
 import producer
 import time
 import os
