@@ -42,7 +42,7 @@ def get_bot_response():
 
 
 @app.route('/authorize/strava')
-def authorize():
+def authorize_strava():
     return strava_connector.authorize()
 
 

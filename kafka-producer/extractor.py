@@ -1,0 +1,43 @@
+from utils import get_logger
+from abc import ABC, abstractmethod
+
+logger = get_logger()
+
+class ActivityExtractor(ABC):
+    PROVIDER_NAME = None
+
+    @abstractmethod
+    def get_activity(self, id):
+        pass
+
+    @abstractmethod
+    def get_activities(self):
+        pass
+
+    @abstractmethod
+    def persist_activity(self, id):
+        pass
+
+    @abstractmethod
+    def persist_activities(self):
+        pass
+
+    @abstractmethod
+    def get_activity_ids(self, activities):
+        pass
+
+    @classmethod
+    def get_provider(cls, provider_name, **creds):
+        for provider_class in cls.__subclasses__():
+            if provider_name == provider_class.PROVIDER_NAME:
+                return provider_class(**creds)
+
+        raise ActivityExtractorException(f"Couldn't find subclass with PROVIDER_NAME '{provider_name}''. Available providers are {[provider_class.PROVIDER_NAME for provider_class in cls.__subclasses__()]}", status_code=404)
+
+class ActivityExtractorException(Exception):
+    def __init__(self, message, error=None, status_code=None):
+        self.message = f'An error occured when trying to extract the fitness data: {message}'
+        self.status = status_code if status_code else getattr(error, 'status', 500)
+        logger.error(self.message)
+        logger.error(error)
+        super().__init__(self.message)

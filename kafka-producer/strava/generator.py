@@ -4,43 +4,46 @@ import random
 import secrets
 from datetime import datetime, timedelta
 from utils import get_logger, get_base_path
+from generator import ActivityGenerator
 from faker import Faker
-
 logger = get_logger()
 faker = Faker()
 TYPES = ['Ride']
 DATE_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
 MAX_RETRIES = 10
 
-# Faking data for Strava API v3 /activities/{id} (variances of example-activity.json)
-# IMPORTANT: this function does not anonymize activities,
-# it just randomly changes values while trying to maintain most semantic coherences
-def generate_strava_dummy_activity():
-    file_path = os.path.join(get_base_path(), 'strava/example-activity.json')
-    for _ in range(MAX_RETRIES):
-        with open(file_path, 'r') as file:
-            activity = json.load(file)
 
-        fake_activity(activity)
+class StravaActivityGenerator(ActivityGenerator):
+    PROVIDER_NAME = 'strava'
 
-        for segment in activity['segment_efforts']:
-            fake_segment(activity, segment)
+    # Faking data for Strava API v3 /activities/{id} (variances of example-activity.json)
+    # IMPORTANT: this function does not anonymize activities,
+    # it just randomly changes values while trying to maintain most semantic coherences
+    def generate_dummy_activity(self):
+        file_path = os.path.join(get_base_path(), 'strava/example-activity.json')
+        for _ in range(MAX_RETRIES):
+            with open(file_path, 'r') as file:
+                activity = json.load(file)
 
-        for lap in activity['laps']:
-            fake_lap(activity, lap)
+            fake_activity(activity)
 
-        for split in activity['splits_metric']:
-            fake_split_metric(activity, split)
+            for segment in activity['segment_efforts']:
+                fake_segment(activity, segment)
 
-        # file_path = os.path.join('kafka-producer', 'strava/example-activity.json')
-        try:
-            verify_data_integrity(activity)
-        except AssertionError:
-            logger.info('Generated activity data not consistent. Trying again...')
-            continue
-        return activity
-    else:
-        logger.warning(f'Generating consistent activity data failed {MAX_RETRIES} times. Aborting and using inconsistent values')
+            for lap in activity['laps']:
+                fake_lap(activity, lap)
+
+            for split in activity['splits_metric']:
+                fake_split_metric(activity, split)
+
+            try:
+                verify_data_integrity(activity)
+            except AssertionError:
+                logger.info('Generated activity data not consistent. Trying again...')
+                continue
+            return activity
+        else:
+            logger.warning(f'Generating consistent activity data failed {MAX_RETRIES} times. Aborting and using inconsistent values')
 
 
 def verify_data_integrity(activity):
