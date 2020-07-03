@@ -36,8 +36,14 @@ class ActivityExtractor(ABC):
 
 class ActivityExtractorException(Exception):
     def __init__(self, message, error=None, status_code=None):
+        self.error = error
         self.message = f'An error occured when trying to extract the fitness data: {message}'
-        self.status = status_code if status_code else getattr(error, 'status', 500)
+        self.status = status_code if status_code else self._get_status_code()
         logger.error(self.message)
         logger.error(error)
         super().__init__(self.message)
+
+    def _get_status_code(self):
+        if isinstance(getattr(self.error, 'status', None), int):
+            return self.error.status
+        return 500

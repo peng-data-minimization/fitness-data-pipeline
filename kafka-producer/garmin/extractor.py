@@ -39,7 +39,7 @@ class GarminActivityExtractor(ActivityExtractor):
 
     def __init__(self, creds):
         self.password = creds.get("password")
-        self.user = creds.get("user")
+        self.user = creds.get("username")
         if not self.password or not self.user:
             raise ActivityExtractorException('Authorization not possible due to missing user or password request parameter.')
 

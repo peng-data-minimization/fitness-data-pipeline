@@ -87,8 +87,9 @@ def exchange_token():
 
 @app.route("/donate-again")
 def donate():
-    token = get_access_token('strava')
-    kafkaproducer_connector.donate_activity_data({'token': token})
+    app = request.args.get('app', 'strava')
+    token = get_access_token(app)
+    kafkaproducer_connector.donate_activity_data({'token': token, 'app': app})
     return jsonify(success=True)
 
 
