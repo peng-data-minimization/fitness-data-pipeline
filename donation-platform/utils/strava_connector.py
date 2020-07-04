@@ -1,13 +1,12 @@
-import logging
 import requests
 import os
 import json
-from flask import redirect
-from utils import get_base_path
+from flask import redirect, request
+from utils import get_base_path, get_logger
 import urllib
 
 STRAVA_SCOPES = 'activity:read,activity:read_all'
-logger = logging.getLogger()
+logger = get_logger()
 
 
 def authorize():
@@ -28,8 +27,9 @@ def authorize_url():
 
 
 def get_callback_url():
-    app_domain = os.getenv('APP_DOMAIN_NAME', 'localhost')
-    return 'http://' + app_domain + ':7777/exchange_token'
+    app_host = request.headers['Host']
+    logger.debug(f'Setting host for authorization callback {app_host}')
+    return 'http://' + app_host + '/exchange_token'
 
 
 def get_token(code):

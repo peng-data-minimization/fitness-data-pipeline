@@ -20,7 +20,6 @@ A Kubernetes based fitness data streaming pipeline with the following components
 
 ## Dependencies
 
-* MiniKube
 * helm
 * kubectl
 * envsubst (gettext)
@@ -28,21 +27,22 @@ A Kubernetes based fitness data streaming pipeline with the following components
 
 ## Deployment
 
-1. Deploy the Confluent Platform on k8s with helm:
-```
-$ helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/
-$ helm install fitness-data-pipeline confluentinc/cp-helm-charts --version 0.5.0 -f pipeline/confluent-platform/values.yml
-```
+1. Deploy the data minimization pipeline based on Confluent Kafka with Elasticsearch and Kibana for visualizations and Prometheus and Grafana for monitoring (for configuration options and a deployment guide please refer to [pipeline/README.md](pipeline/README.md)):
+    ```
+    $ helm repo add dm-helm-charts https://peng-data-minimization.github.io/helm-charts
+    $ helm install dm-pipeline dm-helm-charts/data-minimization-pipeline
+    ```
 
-2. Create a k8s deployment for the donation-platform and the kafka-producer and expose them via a NodePort:
-```
-$ export STRAVA_CLIENT_ID=<client-id>
-$ export STRAVA_CLIENT_SECRET=<client-secret>
-$ cat deployment.yml | envsubst | kubectl apply -f -
-```
-3. Setup remaining pipeline components (Elasticsearch, Kibana, Grafana & Prometheus) (refer to [pipeline/README.md](pipeline/README.md))
+2. Create a k8s deployment for the donation-platform and the kafka-producer and expose them via a LoadBalancer:
+    ```
+    $ export STRAVA_CLIENT_ID=<client-id>
+    $ export STRAVA_CLIENT_SECRET=<client-secret>
+    $ export PIPELINE_CP_PREFIX=<helm-confluent-platform-release-name> # needed to reach the Kafka broker
+    $ cat deployment.yml | envsubst | kubectl apply -f -
+    ```
+3. Setup and configure the SPI with the data minimization worker
 
-4. Testing setup see [Manual Testing](#manual-testing)
+4. Test the pipeline (see [Manual Testing](#manual-testing))
 
 
 ## Development
@@ -67,39 +67,34 @@ $ cat deployment.yml | envsubst | kubectl apply -f -
 
 **Kafka Producer**
 
-Get IP and port of fitness-data-donation-service node:
+Start continuously sending generated fitness data to Kafka:
 ```
-$ export NODE_IP=$(kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}')
-$ export DONATION_PORT=$(kubectl get service fitness-data-donation-service -o jsonpath='{.spec.ports[?(@.name=="donation")].nodePort}')
-$ export PRODUCER_PORT=$(kubectl get service fitness-data-donation-service -o jsonpath='{.spec.ports[?(@.name=="producer")].nodePort}')
-```
-
-Start continuously sending exemplary fitness data to Kafka:
-```
-$ curl -X GET http://${NODE_IP}:${PRODUCER_PORT}/generate-data/start
+$ kubectl port-forward deployment/kafka-fitness-data-producer 7778
+$ curl -s -X GET http://localhost:7778/generate-data/start
 ```
 
 **Fitness Data Donation Platform**
 
-Enable local port forwarding to access donation platform in the local browser and donate e.g. Strava activity data:
+Get  to access the donation platform and donate e.g. Strava activity data:
 ```
-$ ssh -fNT -L 7777:<NODE_IP>:<DONATION_PORT> root@<VM_IP>
+$ kubectl port-forward deployment/kafka-fitness-data-producer 7777
 $ open http://localhost:7777/authorize/strava
 ```
+Alternatively, get the external loadbalancer ip with `kubectl get services fitness-data-donation-service  --output jsonpath='{.status.loadBalancer.ingress[0].ip}'`.
 
 **Kafka Broker**
 
 Send data via:
-* donation platform `/authorize/strava`
+* donation platform `/authorize/{strava,garmin}`
 * fitness data kafka-producer `/generate-data/start`
 * manually
- ```
- kubectl exec -c cp-kafka-broker -it fitness-data-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-producer --broker-list localhost:9092 --topic anon
- ```
+    ```
+    kubectl exec -c cp-kafka-broker -it dm-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-producer --broker-list localhost:9092 --topic anon
+    ```
 
 Verify that data can be consumed:
 ```
-$ kubectl exec -c cp-kafka-broker -it fitness-data-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic anon --from-beginning
+$ kubectl exec -c cp-kafka-broker -it dm-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic anon --from-beginning
 ```
 
 **Kafka / Zookeeper Client Deployment**
@@ -113,6 +108,13 @@ $ kubectl exec -it kafka-client -- /bin/bash <kafka-binary>
 ```
 For more details see [cp-helm-charts#kafka](https://github.com/confluentinc/cp-helm-charts#kafka) and [cp-helm-charts#zookeepers](https://github.com/confluentinc/cp-helm-charts#zookeepers).
 
+**End2End Pipeline & Performance Testing**
+
+* run `./pipeline/bin/test-pipeline.sh` to execute the manual steps above and test the complete pipeline
+* run `./pipeline/bin/performance-test-kafka.sh` to deploy a Kafka client pod and execute performance tests for the Kafka broker
+
+Refer to [pipeline/README.md](pipeline/README.md) for more details.
+
 ### Local Setup
 
 To build and test the application locally, use docker-compose:
@@ -124,45 +126,3 @@ $ docker exec $(docker ps -aqf "name=fitness-data-pipeline_kafka_1") /bin/bash -
 ```
 
 See [kafka-producer/README.md](kafka-producer/README.md) and [donation-platform/README.md](donation-platform/README.md) for more details.
-
-
-## Environment Setup
-
-The pipeline is deployed on a MiniKube Kubernetes Cluster running Ubuntu 20.04 on GCP.
-
-
-1. Install MiniKube & kubectl
-Follow tutorial [How To Install Minikube on Ubuntu](https://computingforgeeks.com/how-to-install-minikube-on-ubuntu-debian-linux/), but don't use additonal hypervisor and instead install MiniKube with `--driver=none`
-
-2. Install Helm
-```
-$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-$ chmod 700 get_helm.sh
-$ ./get_helm.sh
-```
-
-3. Install further tooling (recommended)
-```
-$ apt-get update -y && apt-get install gettext-base
-$ helm plugin install https://github.com/databus23/helm-diff --version master
-```
-
-4. Configure new storage location for docker
-
- 1. Stop Docker
-```
-$ systemctl stop docker
-```
- 2. Add `--data-root` flag to `dockerd` startup in `/lib/systemd/system/docker.service`
-```diff
-+ExecStart=/usr/bin/dockerd  --data-root /data/lib/docker ....
-```
- 3. Rsync existing data
-```
-$ rsync -aqxP /var/lib/docker/ /data/lib/docker
-```
- 4. Start docker
-```
-$ systemctl daemon-reload
-$ systemctl start docker
-```

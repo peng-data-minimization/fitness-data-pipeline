@@ -4,15 +4,17 @@ A simple python Kafka producer that collects donated fitness data and scrapes pu
 
 Currently supported fitness apps & platforms:
 * Strava
-
+* Garmin (currently `user:password` only)
 
 ## Usage
 
-### GET `/donate-activities?token=<access-token>`
-Donates all personal fitness activity data visible with given `access-token`. The endpoint is automically being called after authorizing the donation platform to access ones fitness data (e.g. `/authorize/strava`).
+### GET `/donate-activities`
+* `?app=strava&token=<access-token>`
+* `?app=garmin&username=<username>&password=<password>`
+Donates all personal fitness activity data visible with given `access-token` / `username:password`. The endpoint is automically being called after authorizing the donation platform to access ones fitness data (e.g. `/authorize/strava`).
 
-### GET `/generate-data/{start,stop}`
-Starts / stops continuously producing exemplary fitness data. Each second an activity is send to the ingestion Kafka topic.
+### GET `/generate-data/{start,stop}?app=<garmin/strava/all>&interval=<seconds>`
+Starts / stops continuously producing exemplary fitness data. Each second an activity is send to the ingestion Kafka topic. All parameters are optional. The default interval is 1 second.
 
 
 ## Deployment

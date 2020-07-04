@@ -8,7 +8,6 @@ from garmin import extractor
 import producer
 import time
 import os
-import requests
 
 app = Flask(__name__)
 logger = get_logger()
@@ -27,6 +26,7 @@ def donate():
     try:
         producer.produce(activities)
     except Exception as e:
+        logger.error('Producing activity records failed with:' + str(e))
         return jsonify(success=False, error=str(e)), 500
 
     return jsonify(success=True, donated_activities=donated_activity_ids)
@@ -44,26 +44,26 @@ def stop_generation():
 def start_generation():
     try:
         app = request.args.get('app', 'strava')
-        intervall = request.args.get('intervall', 1)
+        interval = request.args.get('interval', 1)
         generator = ActivityGenerator.get_provider(provider_name=app)
     except Exception as e:
         return jsonify(success=False, error=str(e)), 404
 
     os.environ[f'{app}_generation'] = 'running'
-    t = Thread(target=generate_and_produce, args=[generator, intervall])
+    t = Thread(target=generate_and_produce, args=[generator, interval])
     t.daemon = True
     t.start()
     return jsonify(success=True)
 
-def generate_and_produce(generator, intervall):
+def generate_and_produce(generator, interval):
     provider = generator.PROVIDER_NAME
     while os.getenv(f'{provider}_generation') == 'running':
         activities = [generator.generate_dummy_activity()]
         try:
             producer.produce(activities)
         except Exception as e:
-            logger.warning(str(e))
-        time.sleep(intervall)
+            logger.warning('Producing generated activity records failed with:' + str(e))
+        time.sleep(interval)
 
 if __name__ == '__main__':
     app.run(port=7778, host='0.0.0.0')

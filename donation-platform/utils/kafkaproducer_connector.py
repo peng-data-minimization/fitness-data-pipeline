@@ -15,9 +15,9 @@ def donate_activity_data(params):
     # grequests.get(url, hooks={'response': handle_response})
     response = requests.get(url)
     if response.status_code == 200:
-        logger.debug(f'Donating activity data was successful.')
+        logger.debug(f'Donating activity data was successful. {response.url}')
     else:
-        logger.error(f'Donating activity data failed.')
+        logger.error(f'Donating activity data failed. {response.url} - {response.status_code} - {response.text}')
 
 
 def handle_response(response, **kwargs):

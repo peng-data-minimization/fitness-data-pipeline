@@ -20,7 +20,7 @@ spec:
         - containerPort: 7778
         env:
         - name: KAFKA_DOMAIN_NAME
-          value: fitness-data-pipeline-cp-kafka-headless
+          value: "${PIPELINE_CP_PREFIX}-cp-kafka-headless"
       - name: fitness-data-donation
         image: tubpeng/fitness-data-donation
         ports:
@@ -41,21 +41,29 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: fitness-data-donation-service
+  name: fitness-data-producer-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: kafka-fitness-data-producer
   ports:
-    - port: 7777
-      targetPort: 7777
-      name: donation
-    - port: 7778
+    - protocol: TCP
+      port: 7778
       targetPort: 7778
-      name: producer
-      # Optional field
-      # By default and for convenience, the Kubernetes control plane will allocate a port from a range (default: 30000-32767)
-      # nodePort: 30007
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fitness-data-donation-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: kafka-fitness-data-producer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 7777
 
 ---
 apiVersion: v1

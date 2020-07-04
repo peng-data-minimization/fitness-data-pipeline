@@ -1,6 +1,6 @@
 PUT _template/test
 {
-  "index_patterns": ["index*"],
+  "index_patterns": ["activities"],
   "mappings": {
     "_doc": {
       "properties": {

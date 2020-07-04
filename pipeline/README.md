@@ -1,23 +1,86 @@
 # Streaming Pipeline
 
-A Kubernetes based fitness data streaming pipeline with the following components:
+A Kubernetes based data minimization streaming pipeline with the following components:
 * Confluent Platform
 * Elasticsearch & Kibana
 * Grafana & Prometheus
-* Fitness Data Donation Platform
-* Fitness Data Kafka Producer
 
-## Setup Confluent Platform
+
+**DEPRECATION WARNING**
+*Previously, all pipeline components were setup independently (see sections marked as DEPRECATED below). This still works, but is not the recommended setup.*
+*Now, all components are packaged in a single helm chart and can be deployed with a single command.*
+
+## Setup Data Minimization Pipeline
+
+Deploy the complete data minimization pipeline with the SPI worker, a Confluent Kafka stack, Elasticsearch, Kibana for visualizations and Prometheus and Grafana for monitoring:
+```
+$ helm repo add dm-helm-charts https://peng-data-minimization.github.io/helm-charts
+$ helm install dm-pipeline dm-helm-charts/data-minimization-pipeline -f pipeline/spi/fitness-data-minimization-tasks.yml -f pipeline/kibana/visualizations.yml
+```
+where:
+* `fitness-data-minimization-tasks.yml` is the SPI worker config containing all data minimization tasks (overwrites default helm `values.yaml`)
+* `visualizations.yml` is a Kibana config importing pre-defined fitness data visualizations and dashboads (overwrites default helm `values.yaml`)
+
+In case you would like to name the pipeline differently, keep in mind that release name specific entries of the default `values.yaml` have to be updated.
+
+
+## Test Pipeline
+**Producer -> Broker -> Connector Sink -> Elasticsearch -> Kibana**
+1. Generate test activity data
+    ```
+    # kafka-fitness-data-producer deployment required
+    $ kubectl port-forward deployment/kafka-fitness-data-producer 7778
+    $ curl -X GET http://localhost:7778/generate-data/start
+
+    # altervatively manually generate data
+    $ kubectl exec -c cp-kafka-broker -it dm-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-producer --broker-list localhost:9092 --topic anon
+    ```
+2. Check that data can be consumed
+    ```
+    $ kubecexec -c cp-kafka-broker -it dm-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic anon
+    ```
+3. Check that Elasticsearch connector sink works
+    ```
+    $ kubectl logs elasticsink-0 -f | grep "Delivered"
+    [2020-06-29 09:37:03,969] INFO Delivered 90 records for anon since 2020-06-29 09:32:27 (com.datamountaineer.streamreactor.connect.utils.ProgressCounter)
+    ```
+4. Query Elasticsearch
+    ```
+    $ kubectl port-forward service/elasticsearch-client 9200
+    $ curl -X GET http://localhost:9200/activities/_search?size=10\&q=*:* | jq .[]
+    ```
+5. Check Kibana
+    ```
+    $ kubectl port-forward deployment/kibana 5601
+    ```
+
+**Scripted End2End & Load Testing**
+* run `./pipeline/bin/test-pipeline.sh` to execute the manual steps above and test the complete pipeline
+* run `./pipeline/bin/performance-test-kafka.sh` to deploy a Kafka client pod and execute performance tests for the Kafka broker
+
+**Monitoring**
+Open Grafana locally and check pre-defined K8s dashboard
+```
+$ kubectl port-forward deployment/dm-pipeline-grafana 3000
+$ kubectl get secret dm-pipeline-grafana -o jsonpath="{.data.admin-user}" | base64 --decode
+$ kubectl get secret dm-pipeline-grafana -o jsonpath="{.data.admin-password}" | base64 --decode
+```
+
+---
+
+
+## Setup Confluent Platform (DEPRECATED)
 
 Deploy the Confluent Platform with helm:
 ```
 $ helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/
-$ helm install fitness-data-pipeline confluentinc/cp-helm-charts --version 0.5.0 -f pipeline/confluent-platform/values.yml
+$ helm install dm-pipeline confluentinc/cp-helm-charts --version 0.5.0 -f pipeline/confluent-platform/values.yml
 ```
 
 If you are having problems with access your kafka brokers from the outside, have a look [here](https://medium.com/@tsuyoshiushio/configuring-kafka-on-kubernetes-makes-available-from-an-external-client-with-helm-96e9308ee9f4) and [here](https://github.com/confluentinc/cp-helm-charts/issues/351).
 
-## Setup Elasticsearch & Kibana
+
+## Setup Elasticsearch & Kibana (DEPRECATED)
 
 For reference see the following tutorials [1](https://www.linode.com/docs/kubernetes/how-to-deploy-the-elastic-stack-on-kubernetes/
 ) & [2](https://logz.io/blog/deploying-the-elk-stack-on-kubernetes-with-helm/).
@@ -50,11 +113,11 @@ Warning: Unfortunately, the lensesio Kafka Elasticsearch connector does not yet 
     * Import dashboard and visualizations (see [dashboard.json](pipeline/kibana/config/dashboard.json))
         <img src="kibana/img/kibana-dashboard.png" alt="Kibana Visualization" height="300" />
 
-5. Test Stack (see [Manual Testing](#test-pipeline-))
+5. Test Stack (see [Test Pipeline](#test-pipeline))
 
 
 
-## Setup Monitoring (Grafana & Prometheus)
+## Setup Monitoring (Grafana & Prometheus) (DEPRECATED)
 
 JMX Metrics are enabled by default for all Confluent Platform components, Prometheus JMX Exporter is installed as a sidecar container along with all Pods.
 
@@ -76,32 +139,3 @@ JMX Metrics are enabled by default for all Confluent Platform components, Promet
 3. Add Prometheus as Data Source in Grafana (http://prometheus-server:80)
 
 4. Import Confluent dashboard into Grafana ([confluent-grafana-dashboard.json](monitoring/confluent-grafana-dashboard.json))
-
-
-## Setup Donation Platform & Kafka Producer
-
-Please refer to the Fitness Data Pipeline [README](../README.md) for more information about those components.
-
-
-## Test Pipeline
-**Producer -> Broker -> Connector Sink -> Elasticsearch -> Kibana**
-1. Generate test activity data
-    ```
-    $ export NODE_IP=$(kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="InternalIP")].address}')
-    $ export PRODUCER_PORT=$(kubectl get service fitness-data-donation-service -o jsonpath='{.spec.ports[?(@.name=="producer")].nodePort}')
-    $ curl -X GET http://${NODE_IP}:${PRODUCER_PORT}/generate-data/start
-    ```
-2. Check that data can be consumed
-    ```
-    $ kubecexec -c cp-kafka-broker -it fitness-data-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic anon
-    ```
-3. Check that Elasticsearch connector sink works
-    ```
-    $ kubectl logs elasticsink-0 -f | grep "Delivered"
-    [2020-06-29 09:37:03,969] INFO Delivered 90 records for anon since 2020-06-29 09:32:27 (com.datamountaineer.streamreactor.connect.utils.ProgressCounter)
-    ```
-4. Query Elasticsearch or look in Kibana
-    ```
-    $ kubectl port-forward service/elasticsearch-client 9200
-    $ curl -X GET http://localhost:9200/activities/_search?size=1000\&q=id:12345678987654321 | jq .[] # 12345678987654321 is the example activity data id
-    ```

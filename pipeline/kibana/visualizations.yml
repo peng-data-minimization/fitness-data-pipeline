@@ -1,0 +1,7 @@
+dashboardImport:
+  enabled: true
+  timeout: 60
+  xpackauth:
+    enabled: false
+  dashboards:
+    fitnessData: file://pipeline/kibana/config/dashboard.json

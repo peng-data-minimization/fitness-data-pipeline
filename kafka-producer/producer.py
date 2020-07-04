@@ -9,6 +9,7 @@ logger = get_logger()
 
 def produce(activities):
     kafka_domain = os.getenv('KAFKA_DOMAIN_NAME', 'localhost')
+    logger.debug(f'Connecting to Kafka @ {kafka_domain} to send activities.')
     producer = KafkaProducer(bootstrap_servers=f'{kafka_domain}:9092', value_serializer=get_serializer(), retries=5)
     for activity in activities:
         logger.debug(f"Trying to send activity: id {activity.get('id', activity.get('activityId'))}, name {activity.get('name', activity.get('activityName'))}, type {activity.get('type', activity.get('typeKey'))}, ...")

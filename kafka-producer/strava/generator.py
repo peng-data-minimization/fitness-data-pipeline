@@ -136,10 +136,10 @@ def rf(max, min=0.0, decimals=1):
     return round(random.uniform(min, max), decimals)
 
 
-# perturbed split, lap or segment values shall be in reasonable intervall of overall values
+# perturbed split, lap or segment values shall be in reasonable interval of overall values
 def verify_perturbed_values(activity):
 
-    # should be mostly inside intervall
+    # should be mostly inside interval
     assert activity['total_elevation_gain'] * 0.9 < sum(split['elevation_difference'] for split in activity['splits_metric'] if split['elevation_difference'] > 0 ) < activity['total_elevation_gain'] * 1.1
 
 
