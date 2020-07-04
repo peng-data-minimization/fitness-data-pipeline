@@ -4,11 +4,8 @@ A Kubernetes based data minimization streaming pipeline with the following compo
 * Confluent Platform
 * Elasticsearch & Kibana
 * Grafana & Prometheus
+* Data Minimization SPI worker
 
-
-**DEPRECATION WARNING**
-*Previously, all pipeline components were setup independently (see sections marked as DEPRECATED below). This still works, but is not the recommended setup.*
-*Now, all components are packaged in a single helm chart and can be deployed with a single command.*
 
 ## Setup Data Minimization Pipeline
 
@@ -18,14 +15,20 @@ $ helm repo add dm-helm-charts https://peng-data-minimization.github.io/helm-cha
 $ helm install dm-pipeline dm-helm-charts/data-minimization-pipeline -f pipeline/spi/fitness-data-minimization-tasks.yml -f pipeline/kibana/visualizations.yml
 ```
 where:
-* `fitness-data-minimization-tasks.yml` is the SPI worker config containing all data minimization tasks (overwrites default helm `values.yaml`)
-* `visualizations.yml` is a Kibana config importing pre-defined fitness data visualizations and dashboads (overwrites default helm `values.yaml`)
+* `fitness-data-minimization-tasks.yml` is the [SPI](https://github.com/peng-data-minimization/kafka-spi) worker config containing all data minimization tasks (refer to the [minimizer repo](https://github.com/peng-data-minimization/minimizer) for more task configuration options)
+* `visualizations.yml` is a Kibana config importing pre-defined fitness data visualizations and dashboads
 
 In case you would like to name the pipeline differently, keep in mind that release name specific entries of the default `values.yaml` have to be updated.
 
 
 ## Test Pipeline
-**Producer -> Broker -> Connector Sink -> Elasticsearch -> Kibana**
+**`Producer -> Broker -> Connector Sink -> Elasticsearch -> Kibana`**
+
+### Scripted E2E & Load Testing
+* run `./pipeline/bin/test-pipeline.sh` to execute the manual steps below and test the complete pipeline end-to-end
+* run `./pipeline/bin/performance-test-kafka.sh` to deploy a Kafka client pod and execute performance tests for the Kafka broker
+
+### Manual Testing
 1. Generate test activity data
     ```
     # kafka-fitness-data-producer deployment required
@@ -54,20 +57,23 @@ In case you would like to name the pipeline differently, keep in mind that relea
     $ kubectl port-forward deployment/kibana 5601
     ```
 
-**Scripted End2End & Load Testing**
-* run `./pipeline/bin/test-pipeline.sh` to execute the manual steps above and test the complete pipeline
-* run `./pipeline/bin/performance-test-kafka.sh` to deploy a Kafka client pod and execute performance tests for the Kafka broker
+### Monitoring
 
-**Monitoring**
 Open Grafana locally and check pre-defined K8s dashboard
 ```
-$ kubectl port-forward deployment/dm-pipeline-grafana 3000
 $ kubectl get secret dm-pipeline-grafana -o jsonpath="{.data.admin-user}" | base64 --decode
 $ kubectl get secret dm-pipeline-grafana -o jsonpath="{.data.admin-password}" | base64 --decode
+$ kubectl port-forward deployment/dm-pipeline-grafana 3000
 ```
 
 ---
+**DEPRECATION WARNING**
 
+*Previously, all pipeline components were setup independently (see sections marked as DEPRECATED below). This still works, but is not the recommended setup.*
+
+*Now, all components are packaged in a single helm chart and can be deployed with a single command.*
+
+---
 
 ## Setup Confluent Platform (DEPRECATED)
 

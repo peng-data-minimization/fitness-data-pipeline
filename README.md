@@ -4,6 +4,7 @@ A Kubernetes based fitness data streaming pipeline with the following components
 * Confluent Platform
 * Elasticsearch & Kibana
 * Grafana & Prometheus
+* Data Minimization SPI worker
 * Fitness Data Donation Platform
 * Fitness Data Kafka Producer
 
@@ -40,7 +41,11 @@ A Kubernetes based fitness data streaming pipeline with the following components
     $ export PIPELINE_CP_PREFIX=<helm-confluent-platform-release-name> # needed to reach the Kafka broker
     $ cat deployment.yml | envsubst | kubectl apply -f -
     ```
-3. Setup and configure the SPI with the data minimization worker
+
+3. Configure the [SPI](https://github.com/peng-data-minimization/kafka-spi) with the [data minimization worker](https://github.com/peng-data-minimization/minimizer) for the fitness data use case
+    ```
+    $ helm upgrade dm-pipeline dm-helm-charts/data-minimization-pipeline --reuse-values -f pipeline/spi/fitness-data-minimization-tasks.yml
+    ```
 
 4. Test the pipeline (see [Manual Testing](#manual-testing))
 
@@ -56,12 +61,12 @@ Roll out the new images with k8s:
 ```
  $ kubectl rollout restart deployment/kafka-fitness-data-producer
 ```
+### E2E Pipeline & Performance Testing
 
-If the deployment config files have changed, you can use rsync:
-```
-$ rsync -a ~workspace/fitness-data-pipeline/ root@<VM_IP>:/data/workspace/fitness-data-pipeline
-$ cat deployment.yml | envsubst | kubectl apply -f -
-```
+* run `./pipeline/bin/test-pipeline.sh` to execute the manual steps below and test the complete pipeline end-to-end
+* run `./pipeline/bin/performance-test-kafka.sh` to deploy a Kafka client pod and execute performance tests for the Kafka broker
+
+Refer to [pipeline/README.md](pipeline/README.md) for more details.
 
 ### Manual Testing
 
@@ -108,12 +113,6 @@ $ kubectl exec -it kafka-client -- /bin/bash <kafka-binary>
 ```
 For more details see [cp-helm-charts#kafka](https://github.com/confluentinc/cp-helm-charts#kafka) and [cp-helm-charts#zookeepers](https://github.com/confluentinc/cp-helm-charts#zookeepers).
 
-**End2End Pipeline & Performance Testing**
-
-* run `./pipeline/bin/test-pipeline.sh` to execute the manual steps above and test the complete pipeline
-* run `./pipeline/bin/performance-test-kafka.sh` to deploy a Kafka client pod and execute performance tests for the Kafka broker
-
-Refer to [pipeline/README.md](pipeline/README.md) for more details.
 
 ### Local Setup
 
