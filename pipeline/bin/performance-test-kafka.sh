@@ -3,11 +3,16 @@
 set -eo pipefail
 
 echo -e "\e[32m\nDownloading Kafka client manifest...\e[0m"
-curl -O https://raw.githubusercontent.com/confluentinc/cp-helm-charts/master/examples/kafka-client.yaml 2> /dev/null && echo -e "\e[32mVSuccessfully downloaded kafka-client.yaml.\e[0m"
+curl -s -O https://raw.githubusercontent.com/confluentinc/cp-helm-charts/master/examples/kafka-client.yaml && echo "Successfully downloaded kafka-client.yaml"
 
 echo -e "\e[32m\nDeploying Kafka client pod...\e[0m"
 kubectl apply -f kafka-client.yaml
 
+echo -e "\e[32m\nCopying Strava example data to Kafka client pod...\e[0m"
+kubectl wait --for=condition=ready pod/kafka-client
+kubectl cp kafka-producer/strava/example-activity.json kafka-client:/
+
+echo -e "\e[32m\nExec into Kafka client pod...\e[0m"
 kubectl exec -it kafka-client -- /bin/bash << EOF
 
 # Show Topics
