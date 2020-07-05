@@ -1,13 +1,10 @@
 from gevent import monkey
 monkey.patch_all()
-import grequests
 from flask import Flask, render_template, request, make_response, jsonify, redirect, url_for, session
 from utils import strava_connector, kafkaproducer_connector, get_logger, get_access_token
 import json
 import uuid
-import os
 import re
-import requests
 import secrets
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
