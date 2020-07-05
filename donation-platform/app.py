@@ -1,6 +1,6 @@
 from gevent import monkey
 monkey.patch_all()
-from flask import Flask, render_template, request, make_response, jsonify, redirect, url_for, session
+from flask import Flask, render_template, request, make_response, jsonify, redirect, url_for, session, flash
 from utils import strava_connector, kafkaproducer_connector, get_logger, get_access_token
 import json
 import uuid
@@ -60,6 +60,36 @@ def validate_login():
     session.pop('token', None)
     session['app'] = 'GARMIN'
     return redirect(url_for('success'))
+
+
+@app.route('/file/select')
+def select_upload_file():
+    session.clear()
+    return make_response(render_template('login.html'))
+
+
+@app.route('/file/upload', methods=['POST', 'GET'])
+def uploadfile():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file:
+            params = {'app': 'fitfile'}
+            kafkaproducer_connector.donate_activity_data(params=params, file=file)
+            return render_template('service.html', service_description='fitfile')
+        else:
+            flash('No selected file')
+            return redirect(request.url)
+    else:
+        return make_response(render_template('upload.html'))
 
 
 @app.route('/success')

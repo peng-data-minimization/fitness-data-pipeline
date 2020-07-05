@@ -1,6 +1,5 @@
 from kafka import KafkaProducer
-from utils import get_logger, get_base_path
-from strava import generator
+from utils import get_logger
 import json
 import os
 
