@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: kafka-producer/Dockerfile
     environment:
-      - KAFKA_DOMAIN_NAME=kafka:9092
+      - KAFKA_DOMAIN_NAME=kafka
     ports:
       - '7778:7778'
     container_name: kafka-fitness-data-producer
