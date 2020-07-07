@@ -9,4 +9,4 @@ RUN pipenv install --system --deploy --ignore-pipfile
 
 EXPOSE 7777
 
-ENTRYPOINT [ "gunicorn", "-c", "config/gunicorn.conf.py", "app:app" ]
+ENTRYPOINT [ "gunicorn", "-c", "config/gunicorn.conf.py", "--preload", "app:app" ]

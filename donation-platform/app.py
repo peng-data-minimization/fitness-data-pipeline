@@ -63,12 +63,6 @@ def validate_login():
     return redirect(url_for('success'))
 
 
-@app.route('/file/select')
-def select_upload_file():
-    session.clear()
-    return make_response(render_template('login.html'))
-
-
 @app.route('/file/upload', methods=['POST', 'GET'])
 def uploadfile():
     if request.method == 'POST':

@@ -1,3 +1,6 @@
+import gevent.monkey
+gevent.monkey.patch_all()
+
 from flask import Flask, request, jsonify
 from extractor import ActivityExtractor, ActivityExtractorException
 from generator import ActivityGenerator
