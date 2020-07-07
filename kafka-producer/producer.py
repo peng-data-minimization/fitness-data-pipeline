@@ -1,5 +1,5 @@
 from kafka import KafkaProducer
-from utils import get_logger
+from utils import get_logger, json_default_converter
 import json
 import os
 
@@ -19,7 +19,7 @@ def produce(activities):
 
 
 def get_serializer():
-    return lambda m: json.dumps(m).encode('ascii')
+    return lambda m: json.dumps(m, default=json_default_converter).encode('ascii')
 
 
 def on_send_success(record_metadata):
