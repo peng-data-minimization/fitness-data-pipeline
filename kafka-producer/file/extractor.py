@@ -11,7 +11,7 @@ class FitFileActivityExtractor(ActivityExtractor):
 
     def __init__(self, file_stream):
         self.fitfile = FitFile(file_stream)
-        self.activity_id = uuid.uuid4()
+        self.activity_id = str(uuid.uuid4())
 
     def get_activity(self, id):
         raise NotImplementedError("One fit file always contains data for one activity only")
@@ -20,7 +20,7 @@ class FitFileActivityExtractor(ActivityExtractor):
         data = []
         for record in self.fitfile.get_messages('record'):
             record_dict = {metric.name: metric.value for metric in record}
-            record_dict.update({'activity_id': self.activity_id})
+            record_dict.update({'activityId': self.activity_id, 'type': 'fitfile_upload'})
             data.append(record_dict)
         return data
 
