@@ -1,7 +1,7 @@
 from utils import get_logger
 from abc import ABC, abstractmethod
-
 logger = get_logger()
+
 
 class ActivityExtractor(ABC):
     PROVIDER_NAME = None
@@ -27,12 +27,16 @@ class ActivityExtractor(ABC):
         pass
 
     @classmethod
-    def get_provider(cls, provider_name, **creds):
+    def get_provider(cls, provider_name, **kwargs):
         for provider_class in cls.__subclasses__():
             if provider_name == provider_class.PROVIDER_NAME:
-                return provider_class(**creds)
+                return provider_class(**kwargs)
 
-        raise ActivityExtractorException(f"Couldn't find subclass with PROVIDER_NAME '{provider_name}''. Available providers are {[provider_class.PROVIDER_NAME for provider_class in cls.__subclasses__()]}", status_code=404)
+        raise ActivityExtractorException(
+            f"Couldn't find subclass with PROVIDER_NAME '{provider_name}''. "
+            f"Available providers are {[provider_class.PROVIDER_NAME for provider_class in cls.__subclasses__()]}",
+            status_code=404)
+
 
 class ActivityExtractorException(Exception):
     def __init__(self, message, error=None, status_code=None):

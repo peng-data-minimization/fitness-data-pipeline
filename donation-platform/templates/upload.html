@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Data Donation</title>
+<title>File Upload</title>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
@@ -112,12 +112,12 @@
 <img/>
 <center>
     <h1>
-        <a href="/">Fitness Data Donation Platform</a>
+        <a href="/">Upload your fit file</a>
     </h1>
 </center>
 <h3>
     <p>
-        {{service_description}} <br>
+        From which app would you like to donate data?.  <br>
     </p>
 </h3>
 <div class="box"></div>
@@ -141,9 +141,16 @@
 <div class="box"></div>
 
 <h3>
+    <center>
     <p>
-        Thanks for donating your {{service_description}} data! <br>
+        <title>Upload a new File</title>
+        <h3>Upload new File</h3>
+        <form method=post enctype=multipart/form-data>
+          <input type=file name=file>
+          <input type=submit value=Upload>
+        </form>
     </p>
+        </center>
 </h3>
 
 <img src="/static/img/{{service_description}}-logo.png" class="center">

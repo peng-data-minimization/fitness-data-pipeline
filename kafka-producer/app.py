@@ -3,8 +3,9 @@ from extractor import ActivityExtractor, ActivityExtractorException
 from generator import ActivityGenerator
 from utils import get_logger
 from threading import Thread
-from strava import extractor, generator
-from garmin import extractor
+from strava.extractor import StravaActivityExtractor
+from garmin.extractor import GarminActivityExtractor
+from file.extractor import FitFileActivityExtractor
 import producer
 import time
 import os
@@ -15,8 +16,12 @@ logger = get_logger()
 @app.route('/donate-activities')
 def donate():
     app = request.args.get('app', 'strava')
+    file = request.files['file']
     try:
-        extractor = ActivityExtractor.get_provider(provider_name=app, creds=request.args)
+        if file:
+            extractor = ActivityExtractor.get_provider(provider_name=app, file_stream=file)
+        else:
+            extractor = ActivityExtractor.get_provider(provider_name=app, creds=request.args)
         activities = extractor.get_activities()
         donated_activity_ids = extractor.get_activity_ids(activities)
         logger.info(f'Extracted activities to be donated and processed: {donated_activity_ids}')
