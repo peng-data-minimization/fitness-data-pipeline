@@ -16,7 +16,7 @@ logger = get_logger()
 @app.route('/donate-activities')
 def donate():
     app = request.args.get('app', 'strava')
-    file = request.files['file']
+    file = request.files.get('file')
     try:
         if file:
             extractor = ActivityExtractor.get_provider(provider_name=app, file_stream=file)
@@ -71,4 +71,4 @@ def generate_and_produce(generator, interval):
         time.sleep(interval)
 
 if __name__ == '__main__':
-    app.run(port=7778, host='0.0.0.0')
+    app.run(port=7778, host='0.0.0.0', debug=True)
