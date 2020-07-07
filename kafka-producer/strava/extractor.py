@@ -58,6 +58,9 @@ class StravaActivityExtractor(ActivityExtractor):
 
 def _get_access_token():
     token_path = os.path.join(get_base_path(), 'strava', 'strava-token.json')
-    with open(token_path, 'r') as file:
-        creds = json.load(file)
-        return creds['access_token']
+    try:
+        with open(token_path, 'r') as file:
+            creds = json.load(file)
+            return creds['access_token']
+    except FileNotFoundError:
+        return None
