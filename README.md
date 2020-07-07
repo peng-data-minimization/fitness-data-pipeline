@@ -38,7 +38,7 @@ A Kubernetes based fitness data streaming pipeline with the following components
     ```
     $ export STRAVA_CLIENT_ID=<client-id>
     $ export STRAVA_CLIENT_SECRET=<client-secret>
-    $ export PIPELINE_CP_PREFIX=<helm-confluent-platform-release-name> # needed to reach the Kafka broker
+    $ export PIPELINE_CP_PREFIX=<helm-confluent-platform-release-name> # needed to reach the Kafka broker (in this example: `dm-pipeline`)
     $ cat deployment.yml | envsubst | kubectl apply -f -
     ```
 
