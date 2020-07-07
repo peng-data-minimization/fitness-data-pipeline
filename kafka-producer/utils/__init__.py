@@ -24,3 +24,5 @@ def get_logger(log_config_path=None):
 def json_default_converter(obj):
     if isinstance(obj, (datetime.datetime, datetime.date)):
         return obj.__str__()
+    else:
+        return obj

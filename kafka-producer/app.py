@@ -5,16 +5,17 @@ from flask import Flask, request, jsonify
 from extractor import ActivityExtractor, ActivityExtractorException
 from generator import ActivityGenerator
 from utils import get_logger
-from threading import Thread
 from strava.extractor import StravaActivityExtractor
 from garmin.extractor import GarminActivityExtractor
 from file.extractor import FitFileActivityExtractor
 import producer
 import time
 import os
+from threading import Thread
 
 app = Flask(__name__)
 logger = get_logger()
+
 
 @app.route('/donate-activities')
 def donate():
@@ -39,6 +40,7 @@ def donate():
 
     return jsonify(success=True, donated_activities=donated_activity_ids)
 
+
 @app.route('/generate-data/stop')
 def stop_generation():
     app = request.args.get('app', 'all')
@@ -47,6 +49,7 @@ def stop_generation():
         os.environ[f'{app}_generation'] = 'stopped'
         logger.info(f"Following activity data generation processes are set to 'stopped': {apps}")
     return jsonify(success=True)
+
 
 @app.route('/generate-data/start')
 def start_generation():
@@ -63,6 +66,7 @@ def start_generation():
     t.start()
     return jsonify(success=True)
 
+
 def generate_and_produce(generator, interval):
     provider = generator.PROVIDER_NAME
     while os.getenv(f'{provider}_generation') == 'running':
@@ -73,5 +77,6 @@ def generate_and_produce(generator, interval):
             logger.warning('Producing generated activity records failed with:' + str(e))
         time.sleep(interval)
 
+
 if __name__ == '__main__':
-    app.run(port=7778, host='0.0.0.0', debug=True)
+    app.run(port=7778, host='0.0.0.0')
