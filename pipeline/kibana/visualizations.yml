@@ -5,4 +5,4 @@ kibana:
     xpackauth:
       enabled: false
     dashboards:
-      fitnessData: file://pipeline/kibana/config/dashboard.json
+      fitnessData: https://raw.githubusercontent.com/peng-data-minimization/fitness-data-pipeline/master/pipeline/kibana/config/dashboard.json

@@ -15,7 +15,7 @@ curl -X GET http://localhost:7778/generate-data/start
 
 
 echo -e "\e[32m\nChecking that data can be consumed...\e[0m"
-kubectl exec -c cp-kafka-broker -it dm-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic anon --from-beginning --max-messages 1
+kubectl exec -c cp-kafka-broker -it dm-pipeline-cp-kafka-0 -- /bin/bash /usr/bin/kafka-console-consumer --bootstrap-server localhost:9092 --topic anon --from-beginning --max-messages 1 | tail -c 1000
 
 
 echo -e "\e[32m\nChecking that Elasticsearch connector sink works...\e[0m"
@@ -31,7 +31,7 @@ curl -s -X GET http://localhost:9200/activities/_search?size=10\&q=*:* | jq .[] 
 echo -e "\e[32m\nChecking Kibana...\e[0m"
 kubectl port-forward deployment/dm-pipeline-kibana 5601 > /dev/null &
 sleep 1
-open http://localhost:5601
+open 'http://localhost:5601/app/kibana#/dashboard/d8a3f7d0-ba3c-11ea-bf74-7faa6b8c47fc?_g=(refreshInterval:(pause:!t,value:0),time:(from:now-90d,mode:quick,to:now))'
 
 
 echo -e "\e[32m\nStopping kubectl port-forwarding...\e[0m"
