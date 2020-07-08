@@ -2,9 +2,10 @@ import gevent.monkey
 gevent.monkey.patch_all()
 
 from flask import Flask, request, jsonify
+from utils import get_logger
 from extractor import ActivityExtractor, ActivityExtractorException
 from generator import ActivityGenerator
-from utils import get_logger
+from strava.generator import StravaActivityGenerator
 from strava.extractor import StravaActivityExtractor
 from garmin.extractor import GarminActivityExtractor
 from file.extractor import FitFileActivityExtractor
