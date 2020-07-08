@@ -62,6 +62,7 @@ def start_generation():
         return jsonify(success=False, error=str(e)), 404
 
     os.environ[f'{app}_generation'] = 'running'
+    logger.info(f'Creating Thread for activity generator and producer {generator}')
     t = Thread(target=generate_and_produce, args=[generator, interval])
     t.daemon = True
     t.start()
@@ -69,8 +70,10 @@ def start_generation():
 
 
 def generate_and_produce(generator, interval):
+    logger.debug('Generate and produce activities..')
     provider = generator.PROVIDER_NAME
     while os.getenv(f'{provider}_generation') == 'running':
+        logger.debug('{provider}: running - generating activity..')
         activities = [generator.generate_dummy_activity()]
         try:
             producer.produce(activities)

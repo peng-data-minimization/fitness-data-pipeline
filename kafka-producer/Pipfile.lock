@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "290b7f31e2ea7eb8cddfd6257c2047678189b26e731bd7525eba40803cd98979"
+            "sha256": "68e1995e4f0e61ff06720c70b15f474fe3c1810d07c0aea6ae6655c51d14bcf9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -92,7 +92,7 @@
             "index": "pypi",
             "version": "==4.1.1"
         },
-         "fitparse": {
+        "fitparse": {
             "hashes": [
                 "sha256:db29e83f77cfb28e2c8cb52cf045c29d274907184411c279cabbabe32250e8fc"
             ],
@@ -114,7 +114,7 @@
             "index": "pypi",
             "version": "==0.1.14"
         },
-         "gevent": {
+        "gevent": {
             "hashes": [
                 "sha256:0b16dd85eddaf6acdad373ce90ed4da09ef466cbc5e0ee5932d13f099929e844",
                 "sha256:0f3fbb1703b10609856e5dffb0e358bf5edf57e52dc7cd7226e3f8674fdc0a0f",
@@ -145,6 +145,7 @@
                 "sha256:f2a02d9004ccb18edd9eaf6f25da9a7763de41a69754d5e4d872a8cbf8bd0b72",
                 "sha256:f41cc8e853ac2252bc58f6feabd74b8aae613e2d19097c5373463122f4dc08f0"
             ],
+            "index": "pypi",
             "version": "==20.6.2"
         },
         "greenlet": {
@@ -167,15 +168,16 @@
                 "sha256:e695ac8c3efe124d998230b219eb51afb6ef10524a50b3c45109c4b77a8a3a92",
                 "sha256:eac2a3f659d5f41d6bbfb6a97733bc7800ea5e906dc873732e00cebb98cec9e4"
             ],
+            "markers": "platform_python_implementation == 'CPython'",
             "version": "==0.4.16"
         },
         "gunicorn": {
             "hashes": [
-                "sha256:1904bb2b8a43658807108d59c3f3d56c2b6121a701161de0ddf9ad140073c626",
-                "sha256:cd4a810dd51bf497552cf3f863b575dabd73d6ad6a91075b65936b151cbf4f9c"
+                "sha256:aa8e0b40b4157b36a5df5e599f45c9c76d6af43845ba3b3b0efe2c70473c2471",
+                "sha256:fa2662097c66f920f53f70621c6c58ca4a3c4d3434205e608e121b5b3b71f4f3"
             ],
             "index": "pypi",
-            "version": "==20.0.4"
+            "version": "==19.9.0"
         },
         "idna": {
             "hashes": [
