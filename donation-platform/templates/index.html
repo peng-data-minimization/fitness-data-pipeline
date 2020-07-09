@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>PENG Fitness Data Minimization</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="/static/img/favicon.png" rel="icon">
+  <link href="/static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Poppins:300,400,500,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="/static/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="/static/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/static/lib/animate/animate.min.css" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="/static/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+    Theme Name: Regna
+    Theme URL: https://bootstrapmade.com/regna-bootstrap-onepage-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+</head>
+
+<body>
+
+  <!--==========================
+  Header
+  ============================-->
+  <header id="header">
+    <div class="container">
+
+      <div id="logo" class="pull-left">
+        <!-- <a href="#hero"><img src="/static/img/logo.png" alt="" title="" /></img></a> -->
+        <!-- Uncomment below if you prefer to use a text logo -->
+        <h1><a href="#hero">PENG</a></h1>
+      </div>
+
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li class="menu-active"><a href="#hero">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#services">Supported Platforms</a></li>
+          <li class="menu-has-children"><a href="#call-to-action">Donate Data</a>
+            <ul>
+              <li><a href="/authorize/strava">Strava</a></li>
+              <li><a href="/authorize/garmin">Garmin</a></li>
+              <li><a href="/file/upload">FIT File Upload</a></li>
+            </ul>
+          </li>
+          <li><a href="#deployment">Deployment</a></li>
+          <li><a href="#team">Team</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->
+
+  <!--==========================
+    Hero Section
+  ============================-->
+  <section id="hero">
+    <div class="hero-container">
+      <h1>Fitness Data Minimization</h1>
+      <h2>Welcome to our fitness data donation platform </h2>
+      <a href="#about" class="btn-get-started">Get Started</a>
+    </div>
+  </section><!-- #hero -->
+
+  <main id="main">
+
+    <!--==========================
+      About Us Section
+    ============================-->
+    <section id="about">
+      <div class="container">
+        <div class="row about-container">
+
+          <div class="col-lg-6 content order-lg-1 order-2">
+            <h2 class="title">Few Words About Us</h2>
+            <p>
+              We are a team of TU Berlin students creating a plug 'n' play data minimizing toolkit for streaming pipelines.
+            </p>
+            <p>
+              Check out our toolchain components on <a href="https://github.com/peng-data-minimization/">GitHub</a>:
+            </p>
+
+            <div class="icon-box wow fadeInUp">
+              <div class="icon"><i class="fa fa-shopping-bag"></i></div>
+              <h4 class="title"><a href="https://github.com/peng-data-minimization/minimizer">Minimizer</a></h4>
+              <p class="description">A python based library which supports several de-identification concepts from simple noise perturbation to k-anonymity.</p>
+            </div>
+
+            <div class="icon-box wow fadeInUp" data-wow-delay="0.2s">
+              <div class="icon"><i class="fa fa-photo"></i></div>
+              <h4 class="title"><a href="https://github.com/peng-data-minimization/kafka-spi">Kafka SPI</a></h4>
+              <p class="description">A wrapper around the Minimizer build for simple integration into Apache Kafka.</p>
+            </div>
+
+            <div class="icon-box wow fadeInUp" data-wow-delay="0.2s">
+              <div class="icon"><i class="fa fa-photo"></i></div>
+              <h4 class="title"><a href="https://github.com/peng-data-minimization/helm-charts">Kubernetes Helm Charts</a></h4>
+              <p class="description">Our Helm registry with charts to deploy the Kafka SPI on Kubernetes and setup an end-to-end Confluent based streaming pipeline.</p>
+            </div>
+
+            <div class="icon-box wow fadeInUp" data-wow-delay="0.4s">
+              <div class="icon"><i class="fa fa-bar-chart"></i></div>
+              <h4 class="title"><a href="https://github.com/peng-data-minimization/fitness-data-pipeline">Fitness Data Demo Pipeline</a></h4>
+              <p class="description">A demo use case for our data minimization toolchain.</p>
+            </div>
+
+          </div>
+
+          <div class="col-lg-6 background order-lg-2 order-1 wow fadeInRight"></div>
+        </div>
+
+      </div>
+    </section><!-- #about -->
+
+    <!--==========================
+      Facts Section
+    ============================-->
+    <section id="facts">
+      <div class="container wow fadeIn">
+        <div class="section-header">
+          <h3 class="section-title">Facts</h3>
+          <p class="section-description">A big shouts out in numbers to all donating athletes</p>
+        </div>
+        <div class="row counters">
+
+  				<div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">3</span>
+            <p>Donators</p>
+  				</div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">521</span>
+            <p>Activity donations</p>
+  				</div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">31.234</span>
+            <p>Donated km of sweaty workouts</p>
+  				</div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">999</span>
+            <p>Hours of very hard work</p>
+  				</div>
+
+  			</div>
+
+      </div>
+    </section><!-- #facts -->
+
+    <!--==========================
+      Supported Platforms
+    ============================-->
+    <section id="services">
+      <div class="container wow fadeIn">
+        <div class="section-header">
+          <h3 class="section-title">Supported Platforms</h3>
+          <p class="section-description">We support the following platforms and mechanisms to donate your fitness data:</p>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+            <div class="box">
+              <div class="icon"><a href=""><i class="fa fa-road"></i></a></div>
+              <h4 class="title"><a href="https://strava.com/">Strava</a></h4>
+              <p class="description">A running and cycling platform.<br>We support the donation of your activity data (OAuth).</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+            <div class="box">
+              <div class="icon"><a href="https://connect.garmin.com/"><i class="fa fa-road"></i></a></div>
+              <h4 class="title"><a href="">Garmin</a></h4>
+              <p class="description">The activity insight platform of the sport wearables producer Garmin.<br>We support the donation of your activity data as well as daily health data (Basic Auth).</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
+            <div class="box">
+              <div class="icon"><a href=""><i class="fa fa-paper-plane"></i></a></div>
+              <h4 class="title"><a href="">FIT File Upload</a></h4>
+              <p class="description">You are not using Strava or Garmin?<br>Don't worry, we support uploading of any .FIT fitness data files.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- #services -->
+
+    <!--==========================
+    Call To Action Section
+    ============================-->
+    <section id="call-to-action">
+      <div class="container wow fadeIn">
+        <div class="row">
+          <div class="col-lg-9 text-center text-lg-left">
+            <h3 class="cta-title">Call To Action</h3>
+            <p class="cta-text"> Donate your fitness or health data to test our demo use case meant for supporting data driven health research projects. <br><br> WARNING: The feature is still highly experimental.</p>
+          </div>
+          <div class="col-lg-3 nav-menu cta-btn-container text-center">
+            <li class="menu-has-children"> <a class="cta-btn align-middle" href="#call-to-action">Donate Data</a>
+              <ul>
+                <li><a href="/authorize/strava">Strava</a></li>
+                <li><a href="/authorize/garmin">Garmin</a></li>
+                <li><a href="/file/upload">FIT File Upload</a></li>
+              </ul>
+            </li>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- #call-to-action -->
+
+    <!-- ==========================
+      Deployment
+    ============================-->
+    <section id="facts">
+      <div class="container wow fadeInUp">
+        <div class="section-header">
+          <h3 class="section-title">Deployment</h3>
+          <p class="section-description"> Deploy the fitness data minimization pipeline with Helm on your Kubernetes cluster.</p>
+          <script id="asciicast-jEzEI6bFB7ydH1mh6WmILRAkO" src="https://asciinema.org/a/jEzEI6bFB7ydH1mh6WmILRAkO.js" data-autoplay="true" data-loop="1" data-theme="solarized-dark" data-size="small" data-rows="30" async></script>
+        </div>
+
+      </div>
+    </section><!-- #deployment -->
+
+    <!--==========================
+      Team Section
+    ============================-->
+    <section id="team">
+      <div class="container wow fadeInUp">
+        <div class="section-header">
+          <h3 class="section-title">Team</h3>
+          <p class="section-description"> We are a team of TU Berlin students working on a PrivacyEngineering project.</p>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <div class="member">
+              <div class="pic"><img src="https://avatars1.githubusercontent.com/u/6007658?s=400&v=4" alt=""></div>
+              <h4>Johann</h4>
+              <span>Tech</span>
+              <div class="social">
+                <a href=""><i class="fa fa-twitter"></i></a>
+                <a href="https://github.com/johanngoltz"><i class="fa fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <div class="member">
+              <div class="pic"><img src="https://avatars2.githubusercontent.com/u/29396800?s=400&v=4" alt=""></div>
+              <h4>Jan</h4>
+              <span>Tech</span>
+              <div class="social">
+                <a href=""><i class="fa fa-twitter"></i></a>
+                <a href="https://github.com/ciklista"><i class="fa fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <div class="member">
+              <div class="pic"><img src="https://avatars2.githubusercontent.com/u/30619224?s=400&u=d7a329da4b515e7b577a4e3d716bff618cd3f58f&v=4" alt=""></div>
+              <h4>Flo</h4>
+              <span>Tech</span>
+              <div class="social">
+                <a href=""><i class="fa fa-twitter"></i></a>
+                <a href="https://github.com/FlorianNachtigall"><i class="fa fa-github"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- #team -->
+
+    <!--==========================
+      Contact Section
+    ============================-->
+    <section id="contact">
+      <div class="container wow fadeInUp">
+        <div class="section-header">
+          <h3 class="section-title">Contact</h3>
+          <p class="section-description">Technical University of Berlin</p>
+        </div>
+      </div>
+
+      <!-- Uncomment below if you wan to use dynamic maps -->
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d9712.620384217595!2d13.3269446!3d52.5125322!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb40aec2d36688d81!2sTechnische%20Universit%C3%A4t%20Berlin!5e0!3m2!1sde!2sde!4v1594234113124!5m2!1sde!2sde" width="100%" height="380" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+      <div class="container wow fadeInUp mt-5">
+        <div class="row justify-content-center">
+
+          <div class="col-lg-3 col-md-4">
+
+            <div class="info">
+              <div>
+                <i class="fa fa-map-marker"></i>
+                <p>Straße des 17. Juni 135<br>10623 Berlin<br>Germany</p>
+              </div>
+
+              <div>
+                <i class="fa fa-envelope"></i>
+                <p>peng.dataminimization@gmail.com</p>
+              </div>
+
+              <div>
+                <i class="fa fa-phone"></i>
+                <p>+1 5589 55488 55s</p>
+              </div>
+            </div>
+
+            <div class="social-links">
+              <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+              <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+              <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+              <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+              <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+            </div>
+
+          </div>
+
+          <div class="col-lg-5 col-md-8">
+            <div class="form">
+              <div id="sendmessage">Your message has been sent. Thank you!</div>
+              <div id="errormessage"></div>
+              <form action="" method="post" role="form" class="contactForm">
+                <div class="form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                  <div class="validation"></div>
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                  <div class="validation"></div>
+                </div>
+                <div class="text-center"><button type="submit">Send Message</button></div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- #contact -->
+
+  </main>
+
+  <!--==========================
+    Footer
+  ============================-->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong>Regna</strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!--
+          All the links in the footer should remain intact.
+          You can delete the links only if you purchased the pro version.
+          Licensing information: https://bootstrapmade.com/license/
+          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Regna
+        -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer><!-- #footer -->
+
+  <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+  <!-- JavaScript Libraries -->
+  <script src="/static/lib/jquery/jquery.min.js"></script>
+  <script src="/static/lib/jquery/jquery-migrate.min.js"></script>
+  <script src="/static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/lib/easing/easing.min.js"></script>
+  <script src="/static/lib/wow/wow.min.js"></script>
+  <script src="/static/lib/waypoints/waypoints.min.js"></script>
+  <script src="/static/lib/counterup/counterup.min.js"></script>
+  <script src="/static/lib/superfish/hoverIntent.js"></script>
+  <script src="/static/lib/superfish/superfish.min.js"></script>
+
+  <!-- Contact Form JavaScript File -->
+  <script src="/static/contactform/contactform.js"></script>
+
+  <!-- Template Main Javascript File -->
+  <script src="/static/js/main.js"></script>
+
+</body>
+</html>

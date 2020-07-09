@@ -15,7 +15,7 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 @app.route('/')
 def home():
-    response = make_response(render_template('home.html'))
+    response = make_response(render_template('index.html'))
 
     if not request.cookies.get('session_id'):
         session_id = str(uuid.uuid4())
