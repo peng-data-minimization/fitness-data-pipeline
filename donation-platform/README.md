@@ -9,6 +9,7 @@ All personal fitness activity data is being donated. It can be choosen whether o
 Currently supported fitness apps & platforms:
 * Strava
 * Garmin (currently `user:password` only)
+* fitfile upload
 
 ## Usage
 
