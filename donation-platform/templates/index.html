@@ -71,9 +71,15 @@
   ============================-->
   <section id="hero">
     <div class="hero-container">
+      {% if donation_success %}
+      <h1>Thanks!</h1>
+      <h2>Your {{service_description}} fitness data has successfully been donated </h2>
+      <a href="#about" class="btn-get-started">Keep Going?</a>
+      {% else %}
       <h1>Fitness Data Minimization</h1>
       <h2>Welcome to our fitness data donation platform </h2>
       <a href="#about" class="btn-get-started">Get Started</a>
+      {% endif %}
     </div>
   </section><!-- #hero -->
 
@@ -227,7 +233,7 @@
       Deployment
     ============================-->
     <section id="facts">
-      <div class="container wow fadeInUp">
+      <div id="deployment" class="container wow fadeInUp">
         <div class="section-header">
           <h3 class="section-title">Deployment</h3>
           <p class="section-description"> Deploy the fitness data minimization pipeline with Helm on your Kubernetes cluster.</p>
@@ -244,7 +250,7 @@
       <div class="container wow fadeInUp">
         <div class="section-header">
           <h3 class="section-title">Team</h3>
-          <p class="section-description"> We are a team of TU Berlin students working on a PrivacyEngineering project.</p>
+          <p class="section-description"> We are a team of TU Berlin students working on a <a href="https://www.ise.tu-berlin.de/menue/lehre/module/privacy_engineering/">PrivacyEngineering</a> project.</p>
         </div>
         <div class="row">
           <div class="col-lg-3 col-md-6">

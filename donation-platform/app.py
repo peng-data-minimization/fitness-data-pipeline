@@ -2,9 +2,7 @@ from gevent import monkey
 monkey.patch_all()
 from flask import Flask, render_template, request, make_response, jsonify, redirect, url_for, session, flash
 from utils import strava_connector, kafkaproducer_connector, get_logger, get_access_token
-import json
 import uuid
-import re
 import secrets
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
@@ -22,24 +20,6 @@ def home():
         response.set_cookie('session_id', session_id)
 
     return response
-
-
-@app.route('/get_bot_response')
-def get_bot_response():
-    user_text = request.args.get('msg')
-    state = request.args.get('state')
-
-    if state:
-        state = json.loads(state)
-    else:
-        state = {'mode': 'main_menu'}
-
-    if (state and state['mode'] == 'concerns') or (re.search('concerns', user_text)):
-        return {'response': "No really, don't worry, our donation platform is really completely safe.",
-                'state': json.dumps({'mode': 'main_menu'})}
-    else:
-        return {'response': "Don't worry, our donation platform is completely safe.",
-                'state': json.dumps({'mode': 'main_menu'})}
 
 
 @app.route('/authorize/strava')
@@ -79,7 +59,7 @@ def uploadfile():
         if file:
             params = {'app': 'fitfile'}
             kafkaproducer_connector.donate_activity_data(params=params, file=file)
-            return render_template('service.html', service_description='fitfile')
+            return render_template('index.html', donation_success=True, service_description='.FIT file')
         else:
             flash('No selected file')
             return redirect(request.url)
@@ -96,7 +76,7 @@ def success():
 
     params['app'] = session['app'].lower()
     kafkaproducer_connector.donate_activity_data(params)
-    return render_template('service.html', service_description=session['app'])
+    return render_template('index.html', donation_success=True, service_description=session['app'])
 
 
 @app.route("/exchange_token")
