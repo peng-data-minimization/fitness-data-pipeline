@@ -20,7 +20,7 @@ class StravaActivityGenerator(ActivityGenerator):
     # IMPORTANT: this function does not anonymize activities,
     # it just randomly changes values while trying to maintain most semantic coherences
     def generate_dummy_activity(self):
-        file_path = os.path.join(get_base_path(), 'strava/example-activity.json')
+        file_path = os.path.join(get_base_path(), 'strava', 'example-activity.json')
         for _ in range(MAX_RETRIES):
             with open(file_path, 'r') as file:
                 activity = json.load(file)
