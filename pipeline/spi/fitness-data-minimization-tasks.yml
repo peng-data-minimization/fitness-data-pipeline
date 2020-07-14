@@ -1,2 +1,20 @@
 spi:
-  tasks: []
+  tasks: 
+  - name: journeyanon
+    input_topic: anon
+    output_topic: anon_presentation
+    function:
+      name: anonymize_journey
+      args:
+        original_to_cvdi_key: 
+          position_lat: Latitude
+          position_long: Longitude
+          heart_rate: Heading
+          enhanced_speed: Speed
+          timestamp: Gentime
+        config_overrides: {}
+      window:
+        type: ingestion_time
+        value: 1
+        grouping_keys:
+        - activityId
