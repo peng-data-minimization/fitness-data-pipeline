@@ -9,7 +9,7 @@ spi:
         original_to_cvdi_key: 
           position_lat: Latitude
           position_long: Longitude
-          heart_rate: Heading
+          cadence: Heading
           enhanced_speed: Speed
           timestamp: Gentime
         config_overrides: {}
