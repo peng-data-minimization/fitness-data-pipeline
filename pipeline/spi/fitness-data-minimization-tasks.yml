@@ -15,7 +15,7 @@ spi:
         config_overrides: {}
       window:
         type: length
-        value: 700
+        value: 567
         grouping_keys:
         - activityId
   - name: removesensible
