@@ -14,8 +14,8 @@ spi:
           timestamp: Gentime
         config_overrides: {}
       window:
-        type: ingestion_time
-        value: 1
+        type: length
+        value: 700
         grouping_keys:
         - activityId
   - name: removesensible
