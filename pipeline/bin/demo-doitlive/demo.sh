@@ -16,12 +16,15 @@ kubectl get pods
 kubectl get pods | grep dm-pipeline-spi
 
 # deploy spi worker with helm
+# note that when the spi is installed by itself not as part of dm-helm-charts/data-minimization-pipeline,
+# the helm values file fitness-data-minimization-tasks.yml does not need the top-level yaml key `spi:`
 cd ~/workspace/helm-charts/subcharts/spi
 helm install dm-pipeline-spi -n demo . -f ./values.yaml -f ~/workspace/fitness-data-pipeline/pipeline/spi/fitness-data-minimization-tasks.yml
 kubectl get pods -w
 
 # illustrate spi worker task config update with helm
-helm diff upgrade dm-pipeline-spi -n demo . --reuse-values -f ~/workspace/fitness-data-pipeline/pipeline/spi/fitness-data-minimization-tasks-empty.yml
+# fitness-data-minimization-tasks-empty.yml has to be created first
+# helm diff upgrade dm-pipeline-spi -n demo . --reuse-values -f ~/workspace/fitness-data-pipeline/pipeline/spi/fitness-data-minimization-tasks-empty.yml
 
 # -> Upload .FIT file (API /file/upload)
 
