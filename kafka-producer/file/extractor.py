@@ -20,7 +20,11 @@ class FitFileActivityExtractor(ActivityExtractor):
         data = []
         for record in self.fitfile.get_messages('record'):
             record_dict = {metric.name: metric.value for metric in record}
-            record_dict.update({'activityId': self.activity_id, 'type': 'fitfile_upload'})
+            record_dict.update({
+                'activityId': self.activity_id,
+                'type': 'fitfile_upload',
+                "position_lat": self.semicircles_to_degrees(record_dict["position_lat"]),
+                "position_long": self.semicircles_to_degrees(record_dict["position_long"])})
             data.append(record_dict)
         return data
 
@@ -35,3 +39,6 @@ class FitFileActivityExtractor(ActivityExtractor):
 
     def get_activity_ids(self, activities):
         return [self.activity_id]
+
+    def semicircles_to_degrees(self, semicircles):
+        return semicircles * 180 / 2 ** 31
