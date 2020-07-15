@@ -19,7 +19,8 @@ class FitFileActivityExtractor(ActivityExtractor):
     def get_activities(self):
         data = []
         for record in self.fitfile.get_messages('record'):
-            record_dict = {metric.name: metric.value for metric in record}
+            record_dict = {metric.name: metric.value if metric.name != "timestamp" else metric.raw_value
+                           for metric in record}
             record_dict.update({
                 'activityId': self.activity_id,
                 'type': 'fitfile_upload',
