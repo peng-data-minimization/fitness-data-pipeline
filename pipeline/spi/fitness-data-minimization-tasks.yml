@@ -1,8 +1,8 @@
 spi:
   tasks:
   - name: journeyanon
-    input_topic: deidentified
-    output_topic: processed
+    input_topic: anon
+    output_topic: deidentified
     function:
       name: anonymize_journey
       args:
@@ -19,8 +19,8 @@ spi:
         grouping_keys:
         - activityId
   - name: removesensible
-    input_topic: anon
-    output_topic: deidentified
+    input_topic: deidentified
+    output_topic: processed
     function:
       name: "drop_keys"
       args:
