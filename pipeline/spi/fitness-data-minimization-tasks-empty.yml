@@ -14,7 +14,7 @@ task_defaults:
 tasks:
 - name: journeyanon
   input_topic: anon
-  output_topic: deidentified
+  output_topic: processed
   function:
     name: anonymize_journey
     args:
@@ -30,10 +30,3 @@ tasks:
       value: 567
       grouping_keys:
       - activityId
-- name: removesensible
-  input_topic: deidentified
-  output_topic: processed
-  function:
-    name: "drop_keys"
-    args:
-      keys: ['activityId', 'timestamp']
