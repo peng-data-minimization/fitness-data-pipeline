@@ -71,9 +71,13 @@
   ============================-->
   <section id="hero">
     <div class="hero-container">
-      {% if donation_success %}
+      {% if donation_status == 'success' %}
       <h1>Thanks!</h1>
       <h2>Your {{service_description}} fitness data has successfully been donated </h2>
+      <a href="#about" class="btn-get-started">Keep Going?</a>
+      {% elif donation_status == 'failure' %}
+      <h1>Bug time!</h1>
+      <h2>Sorry, your {{service_description}} fitness data could not been donated due to an interal error. Please try again later! </h2>
       <a href="#about" class="btn-get-started">Keep Going?</a>
       {% else %}
       <h1>Fitness Data Minimization</h1>

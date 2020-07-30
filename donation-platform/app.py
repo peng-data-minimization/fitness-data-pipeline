@@ -58,8 +58,8 @@ def uploadfile():
             return redirect(request.url)
         if file:
             params = {'app': 'fitfile'}
-            kafkaproducer_connector.donate_activity_data(params=params, file=file)
-            return render_template('index.html', donation_success=True, service_description='.FIT file')
+            status = kafkaproducer_connector.donate_activity_data(params=params, file=file)
+            return render_template('index.html', donation_status=status, service_description='.FIT file')
         else:
             flash('No selected file')
             return redirect(request.url)
@@ -75,8 +75,8 @@ def success():
         params = {'username': session['username'], 'password': session['password']}
 
     params['app'] = session['app'].lower()
-    kafkaproducer_connector.donate_activity_data(params)
-    return render_template('index.html', donation_success=True, service_description=session['app'])
+    status = kafkaproducer_connector.donate_activity_data(params)
+    return render_template('index.html', donation_status=status, service_description=session['app'])
 
 
 @app.route("/exchange_token")
@@ -91,8 +91,8 @@ def exchange_token():
 def donate():
     app = request.args.get('app', 'strava')
     token = get_access_token(app)
-    kafkaproducer_connector.donate_activity_data({'token': token, 'app': app})
-    return jsonify(success=True)
+    status = kafkaproducer_connector.donate_activity_data({'token': token, 'app': app})
+    return jsonify(success=status)
 
 
 if __name__ == '__main__':

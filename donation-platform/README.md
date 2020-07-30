@@ -27,7 +27,34 @@ Donate fitness data of previously authorized platform again.
 
 ## Deployment
 
-The app is being deployed with Kubernetes as part of a Confluent Streaming Platform. For more details see the Fitness Data Pipeline [README](../README.md).
+### Kubernetes
+The app can be deployed on Kubernetes with kubectl and the [deployment.yml](../deployment.yml). For more details see the Fitness Data Pipeline [README](../README.md).
+
+### Heroku
+The app can also be deployed standalone on Heroku. By default, the data donation feature and pipeline data minimization feature are not co-deployed or otherwise integrated.
+
+1. Project structure: Heroku requires the Pipefile and a Heroku deployment specific Procfile exist in the project root. Therefore, as a workaround create a new git repo.
+    ```
+    $ cd donation-platform
+    $ git init .
+    $ git remote add heroku https://git.heroku.com/peng-data-minimization.git
+    $ git add .
+    $ git commit -m 'Initial heroku commit'
+    ```
+
+2. Deploy the app and scale the web worker as needed
+    ```
+    $ heroku config:set STRAVA_CLIENT_SECRET=<client-secret>
+    $ heroku config:set STRAVA_CLIENT_ID=<client-id>
+    $ git push heroku master
+    $ heroku ps:scale web=1
+    ```
+
+3. Open the website and check the logs
+    ```
+    $ heroku open
+    $ heroku logs --tail
+    ```
 
 ## Development
 
