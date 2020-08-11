@@ -8,6 +8,9 @@ A Kubernetes based fitness data streaming pipeline with the following components
 * Fitness Data Donation Platform
 * Fitness Data Kafka Producer
 
+<img src="pipeline/img/pipeline-architecture.png" alt="Pipeline Architecture & Components" />
+
+
 ## Usage
 
 1. Donate fitness data (e.g. Strava activities)
@@ -15,7 +18,7 @@ A Kubernetes based fitness data streaming pipeline with the following components
 3. Visualize anonymized or aggregated data in Kibana
 <table><tr>
     <td> <img src="donation-platform/static/authorize-strava-example.png" alt="1. Strava Authorization" /> </td>
-    <td> <img src="pipeline/kibana/img/kibana-dashboard.png" alt="3. Kibana Visualization" /> </td>
+    <td> <img src="pipeline/img/kibana-dashboard.png" alt="3. Kibana Visualization" /> </td>
 </tr></table>
 
 
