@@ -117,7 +117,7 @@ Warning: Unfortunately, the lensesio Kafka Elasticsearch connector does not yet 
         ```
     * Create index pattern for index `activities`
     * Import dashboard and visualizations (see [dashboard.json](pipeline/kibana/config/dashboard.json))
-        <img src="kibana/img/kibana-dashboard.png" alt="Kibana Visualization" height="300" />
+        <img src="img/kibana-dashboard.png" alt="Kibana Visualization" height="300" />
 
 5. Test Stack (see [Test Pipeline](#test-pipeline))
 
